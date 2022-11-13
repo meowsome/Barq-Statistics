@@ -1,0 +1,62 @@
+Getting set up:
+https://towardsdatascience.com/data-scraping-android-apps-b15b93aa23aa
+Download APK from apkpure
+Run through APK-MITM CLI tool
+Drag+Drop to Android Studio to install
+On emulator, go to https://chls.pro/ssl
+Navigate to settings, accept the user CA certificate
+Charles, turn off local windows proxy: Proxy > Windows Proxy
+Proxy > SSL Proxy settings
+Toggle on
+Add new: *.*
+Go to Android Studio settings > settings > proxy
+Find localhost by going to Charles > Help > Local IP address
+Set proxy to local IP port 8888
+Go to barq
+Investigate requests
+
+
+
+
+
+Get users list:
+https://api.barq.social/graphql
+Set Bearer Token auth from Charles > Click request > Contents > Authentication
+
+{
+	"operationName": "ProfileOverview",
+	"variables": {
+		"offset": 0,
+		"limit": 60,
+		"search": {
+			"isAd": false,
+			"location": {
+				"placeId": "832",
+				"latitude": 40.7306,
+				"longitude": -73.9866,
+				"type": "distance"
+			}
+		},
+		"isAd": false
+	},
+	"query": "query ProfileOverview($isAd: Boolean, $search: ProfileSearchInput!, $offset: Int = 0, $limit: Int = 30) {\n  profiles(search: $search, offset: $offset, limit: $limit) {\n    uuid\n    displayName\n    relationType\n    profileImage(isAd: $isAd) {\n      image {\n        ...UploadedImage\n        __typename\n      }\n      __typename\n    }\n    location {\n      type\n      distance\n      searchDistance\n      place {\n        place\n        countryCode\n        __typename\n      }\n      __typename\n    }\n    roles\n    __typename\n  }\n}\n\nfragment UploadedImage on UploadedImage {\n  uuid\n  isExplicit\n  contentRating\n  __typename\n}\n"
+}
+
+
+
+
+Get individual user:
+https://api.barq.social/graphql
+Set Bearer Token auth
+{
+	"operationName": "ProfileDetail",
+	"variables": {
+		"uuid": "d04a15bd-ca07-4543-996f-058f12ac12e7",
+		"isAd": false,
+		"location": {
+			"longitude": -73.9866,
+			"latitude": 40.7306 // my own lat and long so it can calculate distance I assume 
+		}
+	},
+	"query": "query ProfileDetail($uuid: String!, $isAd: Boolean, $location: SearchLocationInput) {\n  profile(uuid: $uuid, location: $location) {\n    uuid\n    displayName\n    relationType\n    isAdOptIn\n    isBirthday\n    age\n    profileImage(isAd: $isAd) {\n      image {\n        ...UploadedImage\n        __typename\n      }\n      __typename\n    }\n    privacySettings {\n      ...PrivacyFragment\n      __typename\n    }\n    images {\n      id\n      image {\n        ...UploadedImage\n        __typename\n      }\n      isAd\n      likeCount\n      hasLiked\n      accessPermission\n      __typename\n    }\n    location {\n      type\n      distance\n      place {\n        place\n        region\n        countryCode\n        longitude\n        latitude\n        __typename\n      }\n      __typename\n    }\n    bio {\n      biography\n      genders\n      languages\n      relationshipStatus\n      sexualOrientation\n      interests\n      hobbies {\n        id\n        interest\n        __typename\n      }\n      socialAccounts {\n        ...SocialAccountsFragment\n        __typename\n      }\n      __typename\n    }\n    bioAd {\n      biography\n      sexPositions\n      behaviour\n      safeSex\n      canHost\n      __typename\n    }\n    sonas {\n      id\n      displayName\n      images {\n        id\n        __typename\n      }\n      description\n      hasFursuit\n      species {\n        id\n        displayName\n        __typename\n      }\n      __typename\n    }\n    kinks {\n      kink {\n        id\n        displayName\n        categoryName\n        isVerified\n        isSinglePlayer\n        __typename\n      }\n      pleasureReceive\n      pleasureGive\n      __typename\n    }\n    groups {\n      group {\n        uuid\n        displayName\n        isAd\n        contentRating\n        image {\n          ...UploadedImage\n          __typename\n        }\n        __typename\n      }\n      threadCount\n      replyCount\n      __typename\n    }\n    events {\n      event {\n        uuid\n        displayName\n        isAd\n        contentRating\n        eventBeginAt\n        eventEndAt\n        image {\n          ...UploadedImage\n          __typename\n        }\n        __typename\n      }\n      isWaitingList\n      __typename\n    }\n    roles\n    shareHash\n    __typename\n  }\n}\n\nfragment UploadedImage on UploadedImage {\n  uuid\n  isExplicit\n  contentRating\n  __typename\n}\n\nfragment PrivacyFragment on PrivacySettings {\n  startChat\n  viewAge\n  viewAd\n  viewKinks\n  viewProfile\n  blockAdults\n  blockMinors\n  __typename\n}\n\nfragment SocialAccountsFragment on ProfileSocialAccounts {\n  twitter {\n    value\n    accessPermission\n    __typename\n  }\n  twitterAd {\n    value\n    accessPermission\n    __typename\n  }\n  telegram {\n    value\n    accessPermission\n    __typename\n  }\n  instagram {\n    value\n    accessPermission\n    __typename\n  }\n  steam {\n    value\n    accessPermission\n    __typename\n  }\n  discord {\n    value\n    accessPermission\n    __typename\n  }\n  deviantArt {\n    value\n    accessPermission\n    __typename\n  }\n  furAffinity {\n    value\n    accessPermission\n    __typename\n  }\n  __typename\n}\n"
+}

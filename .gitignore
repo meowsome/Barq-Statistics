@@ -1,0 +1,6 @@
+scraping/exports/*
+scraping/data/*
+__pycache__/
+*.pkl
+server/data/*
+.env
