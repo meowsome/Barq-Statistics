@@ -22,7 +22,8 @@ def make_bar_chart(most_common, title, xlabel, ylabel):
     most_common = counter_to_df(most_common, xlabel, ylabel)
 
     fig = px.bar(most_common, x=ylabel, y=xlabel, orientation='h', title=title, height=750)
-    # fig.update_layout(yaxis_title=None, xaxis_title=None)
+    fig.layout.xaxis.fixedrange = True
+    fig.layout.yaxis.fixedrange = True
     return fig
 
 def make_pie_chart(most_common, title, xlabel, ylabel):
@@ -30,6 +31,8 @@ def make_pie_chart(most_common, title, xlabel, ylabel):
     most_common = pd.DataFrame.from_records(list(dict(most_common).items()), columns=[xlabel, ylabel])
 
     fig = px.pie(most_common, values=ylabel, names=xlabel, title=title)
+    fig.layout.xaxis.fixedrange = True
+    fig.layout.yaxis.fixedrange = True
     return fig
 
 def generic_most_common(df, count, chart_type, title, column, recursive, xlabel, ylabel):
