@@ -2,6 +2,10 @@ from collections import Counter
 import plotly.express as px
 import pandas as pd
 from .codes import state_codes, country_codes, top_per_country, top_per_state
+from dash import dcc
+
+def generate_graph(figure):
+    return dcc.Graph(figure=figure, config={'displaylogo': False})
 
 def make_most_common(df, column, count, recursive):
     common_list = []
