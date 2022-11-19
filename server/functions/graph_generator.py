@@ -91,3 +91,17 @@ def count_per_country(df):
 def generic_map(df, scope, column, recursive, title):
     thing_per_state = top_per_state(df, column, recursive) if scope == "USA" else top_per_country(df, column, recursive)
     return plot_map(thing_per_state, title, column, chart_type=scope)
+
+def generic_histogram(df, column, title, cap=None, bins=50, getlen=False):
+    # Modify column of strings to column of string lengths
+    if getlen:
+        df[column] = df[column].str.len()
+    # Collect all points above specified value into one
+    if cap:
+        df[column] = df[column].apply(lambda item: item if item < cap else cap)
+
+    fig = px.histogram(df, x=column, title=title, nbins=bins)
+
+    fig.layout.xaxis.fixedrange = True
+    fig.layout.yaxis.fixedrange = True
+    return fig

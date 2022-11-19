@@ -1,6 +1,6 @@
 from dash import Dash, html
 from functions.retrieve_data import get_altered_df
-from functions.graph_generator import generic_most_common, count_per_state, count_per_country, generic_map, generate_graph
+from functions.graph_generator import generic_most_common, count_per_state, count_per_country, generic_map, generate_graph, generic_histogram
 
 app = Dash(__name__)
 
@@ -38,12 +38,9 @@ app.layout = html.Div(children=[
         generate_graph(figure=generic_map(df, scope="USA", column="groups", recursive=True, title="Most popular groups per state")),
         generate_graph(figure=generic_map(df, scope="USA", column="age", recursive=False, title="Most popular age per state")),
         generate_graph(figure=generic_map(df, scope="world", column="age", recursive=False, title="Most popular age per country")),
-
-        # Histogram of age
-        # Most Common Social Accounts
-        # Histogram of count of fursonas people have
-        
-
+        generate_graph(figure=generic_histogram(df, column="age", title="Distribution of ages capped at 100", cap=100)),
+        generate_graph(figure=generic_histogram(df, column="sonas", title="Distribution of sona counts", cap=100, bins=75, getlen=True)),
+        generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Social Accounts Breakdown", column="socialAccounts", recursive=True, xlabel="Service", ylabel="Count")),
     ])
 ])
 
