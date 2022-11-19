@@ -49,15 +49,29 @@ def generic_most_common(df, count, chart_type, title, column, recursive, xlabel,
 
 def plot_map(thing_per_state, title, column_name, chart_type="USA"):
     states = chart_type == "USA"
+    fig = None
 
-    fig = px.choropleth(thing_per_state,
-    title=title,
-    locations='state' if states else 'country', 
-    locationmode="USA-states" if states else "country names", 
-    scope="usa" if states else "world",
-    color=column_name,
-    color_continuous_scale="Viridis_r"
-    )
+    if states:
+        fig = px.choropleth(
+            thing_per_state,
+            title=title,
+            locations='state',
+            locationmode='USA-states',
+            scope='usa',
+            color=column_name,
+            color_continuous_scale="Viridis_r"
+        )
+    else:
+        fig = px.choropleth(
+            thing_per_state,
+            projection='orthographic',
+            title=title,
+            locations='country', 
+            locationmode="country names", 
+            scope='world',
+            color=column_name,
+            color_continuous_scale="Viridis_r"
+        )
     
     fig.update_layout(margin=dict(
         t=50, # 50px margin above graph to show image
