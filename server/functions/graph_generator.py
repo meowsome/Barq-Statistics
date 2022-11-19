@@ -5,7 +5,7 @@ from .codes import state_codes, country_codes, top_per_country, top_per_state
 from dash import dcc
 
 def generate_graph(figure):
-    return dcc.Graph(figure=figure, config={'displaylogo': False})
+    return dcc.Graph(figure=figure, config={'displaylogo': False}, style={'width': '100%', 'height': '90vh'})
 
 def make_most_common(df, column, count, recursive):
     common_list = []
@@ -58,6 +58,16 @@ def plot_map(thing_per_state, title, column_name, chart_type="USA"):
     color=column_name,
     color_continuous_scale="Viridis_r"
     )
+    
+    fig.update_layout(margin=dict(
+        t=50, # 50px margin above graph to show image
+        l=0,
+        r=0,
+        b=50, # 50px margin below graph
+        pad=0
+    ),
+    autosize=True)
+
     return fig
 
 def count_per_state(df):
