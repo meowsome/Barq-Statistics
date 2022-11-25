@@ -7,14 +7,17 @@ from dash import dcc
 def generate_graph(figure, height='90vh'):
     return dcc.Graph(figure=figure, config={'displaylogo': False}, style={'width': '100%', 'height': height}, className="card")
 
+def titleize(bad_list):
+    return [item.title().replace("_", " ") for item in bad_list]
+
 def make_most_common(df, column, count, recursive):
     common_list = []
     if recursive:
         for items in df[column].dropna().tolist():
             if items is not None:
-                common_list += items
+                common_list += titleize(items)
     else:
-        common_list = [item for item in df[column].dropna().tolist() if item is not None]
+        common_list = [item for item in titleize(df[column].dropna().tolist()) if item is not None]
 
     return Counter(common_list).most_common(count)
 
