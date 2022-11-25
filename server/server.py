@@ -19,8 +19,8 @@ print("Starting app")
 def stat_card_generator(title, stat):
     return html.Div(className="card w3", children=[
         html.Div(className="wrapper-vertical center", children=[
-            html.H4(title, className="center"),
-            html.H2(stat, className="center")
+            html.H2(stat, className="center"),
+            html.H4(title, className="center")
         ])
     ])
 
@@ -29,8 +29,9 @@ app.layout = html.Div(children=[
 
     html.Div(className="wrapper-vertical w10", children=[
         html.Div(className="wrapper-horizontal", children=[
-            stat_card_generator("Total Furries Scraped", df.shape[0]),
-            stat_card_generator("Unique Sona Species", df['sonas'].explode().nunique())
+            stat_card_generator("Total Furries", df.shape[0]),
+            stat_card_generator("Unique Sona Species", df['sonas'].explode().nunique()),
+            stat_card_generator("Countries with Furs", f"{df['countryCode'].nunique()} / 195")
         ]),
         generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Top Fursonas", column="sonas", recursive=True, xlabel="Fursona", ylabel="Count"), height='150vh'),
         generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Orientation Breakdown", column="sexualOrientation", recursive=False, xlabel="Orientation", ylabel="Count"), height='100vh'),
