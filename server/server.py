@@ -33,7 +33,6 @@ app.layout = html.Div(children=[
             stat_card_generator("Unique Sona Species", df['sonas'].explode().nunique())
         ]),
         generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Top Fursonas", column="sonas", recursive=True, xlabel="Fursona", ylabel="Count"), height='150vh'),
-        generate_graph(figure=generic_most_common(df, count=50, chart_type="bar", title="Top States", column="region", recursive=False, xlabel="State", ylabel="Count"), height='150vh'),
         generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Orientation Breakdown", column="sexualOrientation", recursive=False, xlabel="Orientation", ylabel="Count"), height='100vh'),
         generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Gender Breakdown", column="genders", recursive=True, xlabel="Gender", ylabel="Count"), height='100vh'),
         generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Relationship Breakdown", column="relationshipStatus", recursive=False, xlabel="Relationship", ylabel="Count"), height='100vh'),
