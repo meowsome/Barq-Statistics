@@ -1,0 +1,58 @@
+body {
+    background: rgb(225, 225, 225);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+a,
+p {
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.w10 {
+    width: calc(100% - 25px);
+}
+
+/* 
+.dash-graph {
+    margin: 10px;
+    border-radius: 15px;
+} */
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 5px;
+    margin: 10px;
+}
+
+.w3 {
+    width: 33%;
+}
+
+.wrapper-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper-horizontal {
+    display: flex;
+    flex-direction: row;
+}
+
+.left {
+    justify-content: flex-start;
+    
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

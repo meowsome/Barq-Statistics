@@ -16,20 +16,32 @@ with open("barq.pkl", "rb") as pickle_file:
 
 print("Starting app")
 
+def stat_card_generator(title, stat):
+    return html.Div(className="card w3", children=[
+        html.Div(className="wrapper-vertical center", children=[
+            html.H4(title, className="center"),
+            html.H2(stat, className="center")
+        ])
+    ])
+
 app.layout = html.Div(children=[
     html.H1(children='Barq Scraping Statistics'),
 
-    html.Div(children=[
-        generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Top Fursonas", column="sonas", recursive=True, xlabel="Fursona", ylabel="Count"), height='100vh'),
-        generate_graph(figure=generic_most_common(df, count=50, chart_type="bar", title="Top States", column="region", recursive=False, xlabel="State", ylabel="Count"), height='120vh'),
-        generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Orientation Breakdown", column="sexualOrientation", recursive=False, xlabel="Orientation", ylabel="Count"), height='120vh'),
-        generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Gender Breakdown", column="genders", recursive=True, xlabel="Gender", ylabel="Count"), height='120vh'),
-        generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Relationship Breakdown", column="relationshipStatus", recursive=False, xlabel="Relationship", ylabel="Count"), height='120vh'),
-        generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Location Type Breakdown", column="type", recursive=False, xlabel="Location Type", ylabel="Count"), height='120vh'),
-        generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Group Breakdown", column="groups", recursive=True, xlabel="Group", ylabel="Count"), height='120vh'),
-        generate_graph(figure=generic_most_common(df, count=20, chart_type="bar", title="Event Breakdown", column="events", recursive=True, xlabel="Event", ylabel="Count"), height='120vh'),
-        generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Language Breakdown", column="languages", recursive=True, xlabel="Language", ylabel="Count"), height='120vh'),
-        generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Kink Breakdown", column="kinks", recursive=True, xlabel="Kink", ylabel="Count"), height='120vh'),
+    html.Div(className="wrapper-vertical w10", children=[
+        html.Div(className="wrapper-horizontal", children=[
+            stat_card_generator("Total Furries Scraped", df.shape[0]),
+            stat_card_generator("Unique Sona Species", df['sonas'].explode().nunique())
+        ]),
+        generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Top Fursonas", column="sonas", recursive=True, xlabel="Fursona", ylabel="Count"), height='150vh'),
+        generate_graph(figure=generic_most_common(df, count=50, chart_type="bar", title="Top States", column="region", recursive=False, xlabel="State", ylabel="Count"), height='150vh'),
+        generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Orientation Breakdown", column="sexualOrientation", recursive=False, xlabel="Orientation", ylabel="Count"), height='100vh'),
+        generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Gender Breakdown", column="genders", recursive=True, xlabel="Gender", ylabel="Count"), height='100vh'),
+        generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Relationship Breakdown", column="relationshipStatus", recursive=False, xlabel="Relationship", ylabel="Count"), height='100vh'),
+        generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Location Type Breakdown", column="type", recursive=False, xlabel="Location Type", ylabel="Count"), height='100vh'),
+        generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Group Breakdown", column="groups", recursive=True, xlabel="Group", ylabel="Count"), height='150vh'),
+        generate_graph(figure=generic_most_common(df, count=20, chart_type="bar", title="Event Breakdown", column="events", recursive=True, xlabel="Event", ylabel="Count"), height='150vh'),
+        generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Language Breakdown", column="languages", recursive=True, xlabel="Language", ylabel="Count"), height='150vh'),
+        generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Kink Breakdown", column="kinks", recursive=True, xlabel="Kink", ylabel="Count"), height='150vh'),
         generate_graph(figure=count_per_state(df)),
         generate_graph(figure=count_per_country(df)),
         generate_graph(figure=generic_map(df, scope="USA", column="sonas", recursive=True, title="Most popular fursona per state")),
