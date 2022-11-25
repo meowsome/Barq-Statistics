@@ -62,6 +62,11 @@ def update_groups(df):
     df['groups'] = generic_update(df, 'groups', 'group', 'displayName')
     return df
 
+def update_genders(df):
+    print("Update genders")
+    df['genders'] = df['genders'].astype(str).apply(lambda gender: "Nonbinary" if "non" in gender.lower() and "binary" in gender.lower() else gender)
+    return df
+
 def drop_irrelevant_cols(df):
     print("Update irrelevant cols")
     df.drop(['images', 'profileImage', '__typename'], inplace=True, axis=1)
@@ -89,6 +94,7 @@ def get_altered_df():
     df = update_events(df)
     df = update_sonas(df)
     df = update_groups(df)
+    df = update_genders(df)
     df = drop_irrelevant_cols(df)
     print("done altering df")
 
