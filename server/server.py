@@ -1,6 +1,7 @@
 from dash import Dash, html
 from functions.retrieve_data import get_altered_df
 from functions.graph_generator import generic_most_common, count_per_state, count_per_country, generic_map, generate_graph, generic_histogram
+from datetime import date
 
 app = Dash(__name__)
 
@@ -51,6 +52,17 @@ app.layout = html.Div(children=[
         generate_graph(figure=generic_histogram(df, column="age", title="Distribution of ages capped at 100", cap=100)),
         generate_graph(figure=generic_histogram(df, column="sonas", title="Distribution of sona counts", cap=100, bins=75, getlen=True)),
         generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Social Accounts Breakdown", column="socialAccounts", recursive=True, xlabel="Service", ylabel="Count")),
+    ]),
+
+    html.Footer(className="w5 wrapper-vertical left", children=[
+        html.Div(className="p1", children=[
+            html.A(className="center left", href="https://meowso.me", target="_blank", children=[
+                f"Barq Statistics © {date.today().year}",
+                html.Img(src="/assets/meowsome.png"),
+                "meowsome studio",
+            ]),
+            html.P(f"Barq © {date.today().year} <insert name here>")
+        ])
     ])
 ])
 

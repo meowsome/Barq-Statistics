@@ -48,11 +48,35 @@ p {
 
 .left {
     justify-content: flex-start;
-    
+    align-items: flex-start;
 }
 
 .center {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.logo {
+    height: 75px;
+    border-radius: 15px;
+}
+
+.p3 {
+    padding: 30px;
+}
+
+.p1 {
+    padding: 10px;
+}
+
+footer a,
+footer p {
+    color: gray;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+footer img {
+    height: 30px;
 }
