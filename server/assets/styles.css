@@ -1,5 +1,6 @@
 body {
     background: rgb(225, 225, 225);
+    font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", "Segoe UI", Roboto, Ubuntu, sans-serif;
 }
 
 h1,
@@ -76,8 +77,12 @@ footer img {
     height: 30px;
 }
 
+.card p {
+    margin-bottom: 10px;
+}
+
 .card h3 {
-    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 header img {

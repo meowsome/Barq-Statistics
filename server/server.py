@@ -19,7 +19,7 @@ print("Starting app")
 
 def stat_card_generator(title, stat):
     return html.Div(className="card w3", children=[
-        html.Div(className="wrapper-vertical center", children=[
+        html.Div(className="wrapper-vertical center p1", children=[
             html.H1(stat, className="center"),
             html.H4(title, className="center")
         ])
