@@ -57,11 +57,6 @@ p {
     align-items: center;
 }
 
-.logo {
-    height: 75px;
-    border-radius: 15px;
-}
-
 .p3 {
     padding: 30px;
 }
@@ -79,4 +74,14 @@ footer p {
 
 footer img {
     height: 30px;
+}
+
+.card h3 {
+    margin-top: 10px;
+}
+
+header img {
+    height: 60px;
+    border-radius: 15px;
+    padding-right: 5px;
 }
