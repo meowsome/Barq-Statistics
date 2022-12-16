@@ -3,6 +3,7 @@ import plotly.express as px
 import pandas as pd
 from .codes import state_codes, country_codes, top_per_country, top_per_state
 from dash import dcc
+from .retrieve_data import filter_by_country
 
 def generate_graph(figure, height='90vh'):
     return dcc.Graph(figure=figure, config={'displaylogo': False}, style={'width': '100%', 'height': height}, className="card")
@@ -10,8 +11,12 @@ def generate_graph(figure, height='90vh'):
 def titleize(bad_list):
     return [item.title().replace("_", " ") for item in bad_list]
 
-def make_most_common(df, column, count, recursive):
+def make_most_common(df, column, count, recursive, country_code):
     common_list = []
+
+    if country_code:
+        df = filter_by_country(df, country_code=country_code)
+
     if recursive:
         for items in df[column].dropna().tolist():
             if items is not None:
@@ -42,8 +47,11 @@ def make_pie_chart(most_common, title, xlabel, ylabel):
     fig.layout.yaxis.fixedrange = True
     return fig
 
-def generic_most_common(df, count, chart_type, title, column, recursive, xlabel, ylabel):
-    most_common = make_most_common(df, column, count, recursive)
+def generic_most_common(df, count, chart_type, title, column, recursive, xlabel, ylabel, country_code=False):
+    most_common = make_most_common(df, column, count, recursive, country_code)
+
+    if country_code:
+        title += f" in {country_code}"
     
     if chart_type == "bar":
         return make_bar_chart(most_common, title, xlabel, ylabel)
@@ -119,7 +127,11 @@ def generic_map(df, scope, column, recursive, title):
     thing_per_state = top_per_state(df, column, recursive) if scope == "USA" else top_per_country(df, column, recursive)
     return plot_map(thing_per_state, title, column, chart_type=scope)
 
-def generic_histogram(df, column, title, cap=None, bins=50, getlen=False):
+def generic_histogram(df, column, title, cap=None, bins=50, getlen=False, country_code=False):
+    if country_code:
+        title += f" in {country_code}"
+        df = filter_by_country(df, country_code=country_code)
+
     # Modify column of strings to column of string lengths
     if getlen:
         df[column] = df[column].str.len()

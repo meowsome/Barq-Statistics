@@ -76,8 +76,8 @@ def drop_irrelevant_cols(df):
 def apply_settings():
     pd.set_option('display.max_columns', None)
 
-def filter_by_country(df, countryCode='US'):
-    return df[df['countryCode'] == countryCode]
+def filter_by_country(df, country_code='US'):
+    return df[df['countryCode'] == country_code]
 
 
 
