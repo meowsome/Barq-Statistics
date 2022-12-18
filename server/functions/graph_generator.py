@@ -53,6 +53,8 @@ def generic_most_common(df, count, chart_type, title, column, recursive, xlabel,
 
     if country_code:
         title += f" in {country_code}"
+    else:
+        title += " Worldwide"
     
     if chart_type == "bar":
         return make_bar_chart(most_common, title, xlabel, ylabel)
@@ -133,6 +135,8 @@ def generic_histogram(df, column, title, cap=None, bins=50, getlen=False, countr
     if country_code:
         title += f" in {country_code}"
         filtered_df = filter_by_country(filtered_df, country_code=country_code)
+    else:
+        title += " Worldwide"
 
     df_column = filtered_df[column]
 
