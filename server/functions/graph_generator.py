@@ -68,7 +68,7 @@ def generic_most_common(df, count, chart_type, title, column, recursive, xlabel,
     most_common = make_most_common(df, column, count, recursive, country_code)
 
     if country_code:
-        title += f" in {country_code}"
+        title += f" in {country_codes[country_code]}"
     else:
         title += " Worldwide"
     
@@ -149,7 +149,7 @@ def generic_map(df, scope, column, recursive, title):
 def generic_histogram(df, column, title, cap=None, bins=50, getlen=False, country_code=False):
     filtered_df = df
     if country_code:
-        title += f" in {country_code}"
+        title += f" in {country_codes[country_code]}"
         filtered_df = filter_by_country(filtered_df, country_code=country_code)
     else:
         title += " Worldwide"

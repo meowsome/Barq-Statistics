@@ -65,7 +65,7 @@ def generate_country_graphs(country_code=False):
 
 def stat_card_generator(title, stat, country_code=False):
     if country_code:
-        title += f" in {country_code}"
+        title += f" in {country_codes[country_code]}"
 
     return html.Div(className="card w3", children=[
         html.Div(className="wrapper-vertical center p1", children=[
