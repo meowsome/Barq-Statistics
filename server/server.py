@@ -2,6 +2,7 @@ from dash import Dash, html, dcc, Output, Input
 from functions.retrieve_data import get_altered_df
 from functions.graph_generator import generic_most_common, count_per_state, count_per_country, generic_map, generate_graph, generic_histogram
 from datetime import date
+from functions.codes import country_codes
 
 app = Dash(__name__)
 
@@ -28,7 +29,6 @@ print("Starting app")
 # ]
 
 def generate_country_graphs(country_code=False):
-    print("HEWLO")
     country_graphs = [
         generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Top Fursonas", column="sonas", recursive=True, xlabel="Fursona", ylabel="Count", country_code=country_code), height='150vh'),
         generate_graph(figure=generic_most_common(df, count=10, chart_type="pie", title="Orientation Breakdown", column="sexualOrientation", recursive=False, xlabel="Orientation", ylabel="Count", country_code=country_code), height='100vh'),
@@ -99,7 +99,7 @@ app.layout = html.Div(children=[
         html.Div(className="card", children=[
             html.Div(className="p1", children=[
                 html.H3("Specify Country"),
-                dcc.Dropdown(id="country_code", options=df['countryCode'].unique().tolist(), searchable=True, clearable=True)
+                dcc.Dropdown(id="country_code", options=country_codes, searchable=True, clearable=True)
             ])
         ]),
 
