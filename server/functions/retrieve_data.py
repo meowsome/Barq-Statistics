@@ -64,8 +64,8 @@ def update_groups(df):
 
 def update_genders(df):
     print("Update genders")
-    df['genders'] = df['genders'].astype(str).apply(lambda gender: "Nonbinary" if "non" in gender.lower() and "binary" in gender.lower() else gender)
-    df['genders'] = df['genders'].astype(str).apply(lambda gender: "Genderfluid" if "gender" in gender.lower() and "fluid" in gender.lower() else gender)
+    df['genders'] = df['genders'].dropna().apply(lambda genders: "Nonbinary" if "non" in [gender.lower() for gender in genders] and "binary" in [gender.lower() for gender in genders] else genders)
+    df['genders'] = df['genders'].dropna().apply(lambda genders: "Genderfluid" if "gender" in [gender.lower() for gender in genders] and "fluid" in [gender.lower() for gender in genders] else genders)
     return df
 
 def drop_irrelevant_cols(df):
