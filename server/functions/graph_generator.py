@@ -12,17 +12,18 @@ def titleize(bad_list):
     return [item.title().replace("_", " ") for item in bad_list]
 
 def make_most_common(df, column, count, recursive, country_code):
+    filtered_df = df
     common_list = []
 
     if country_code:
-        df = filter_by_country(df, country_code=country_code)
+        filtered_df = filter_by_country(filtered_df, country_code=country_code)
 
     if recursive:
-        for items in df[column].dropna().tolist():
+        for items in filtered_df[column].dropna().tolist():
             if items is not None:
                 common_list += titleize(items)
     else:
-        common_list = [item for item in titleize(df[column].dropna().tolist()) if item is not None]
+        common_list = [item for item in titleize(filtered_df[column].dropna().tolist()) if item is not None]
 
     return Counter(common_list).most_common(count)
 
@@ -128,18 +129,21 @@ def generic_map(df, scope, column, recursive, title):
     return plot_map(thing_per_state, title, column, chart_type=scope)
 
 def generic_histogram(df, column, title, cap=None, bins=50, getlen=False, country_code=False):
+    filtered_df = df
     if country_code:
         title += f" in {country_code}"
-        df = filter_by_country(df, country_code=country_code)
+        filtered_df = filter_by_country(filtered_df, country_code=country_code)
+
+    df_column = filtered_df[column]
 
     # Modify column of strings to column of string lengths
     if getlen:
-        df[column] = df[column].str.len()
+        df_column = df_column.str.len()
     # Collect all points above specified value into one
     if cap:
-        df[column] = df[column].apply(lambda item: item if item < cap else cap)
+        df_column = df_column.apply(lambda item: item if item < cap else cap)
 
-    fig = px.histogram(df, x=column, title=title, nbins=bins)
+    fig = px.histogram(filtered_df, x=column, title=title, nbins=bins)
 
     fig.layout.xaxis.fixedrange = True
     fig.layout.yaxis.fixedrange = True
