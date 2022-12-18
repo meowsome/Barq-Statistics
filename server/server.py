@@ -66,39 +66,19 @@ def stat_card_generator(title, stat):
     ])
 
 app.layout = html.Div(children=[
-    html.Header(className="p1 center wrapper-vertical", children=[
+    html.Header(className="p1 left wrapper-vertical", children=[
         html.Div(className="wrapper-horizontal center left", children=[
             html.Img(src="/assets/logo.png"),
             html.H2("Barq Scraping Statistics")
         ]),
     ]),
     html.Div(className="card w5", children=[
-        html.Div(className="p3 left wrapper-vertical", children=[
+        html.Div(className="p1 left wrapper-vertical", children=[
             html.Div(children=[
-                html.H3("What?"),
-                html.P("Barq is an app for furries to connect with one another based on location. For this project, profile information was collected for a subset of all Barq users. This information was used to perform analytics and statistics.")
+                html.H3("Information"),
+                html.P("Barq is an app for furries to connect with one another based on location. For this project, profile information was collected for a subset of all Barq users. This information was used to perform analytics and statistics. No individual user was singled out in this project.")
             ]),
-            html.Div(children=[
-                html.H3("How?"),
-                html.P("Some tools that were used: Android Studio, Charles, Plotly, Pandas, Numpy"),
-                html.Ol(children=[
-                    html.Li("Android Studio was used used to run the Barq app on a desktop environment"),
-                    html.Li("Charles was used to sniff packets sent to the Barq API from the Barq app"),
-                    html.Li("The Barq API URLs were analyzed to determine their inputs and outputs"),
-                    html.Li("A set of popular locations in the U.S. and other regions around the world were created"),
-                    html.Li("For each location, IDs of 10,000 users in the surrounding area were saved"),
-                    html.Li("A Raspberry Pi was set up with a fresh Barq account to send GET requests using the algorithm described above"),
-                    html.Li("All data was combined and cleaned, and duplicate users were removed")
-                ])
-            ]),
-            html.Div(children=[
-                html.H3("Why?"),
-                html.P("Barq accounts contain information for real furs around the world. By performing statistics on this data, unique geographical and other patterns can be observed for real furs.")
-            ]),
-            html.Div(children=[
-                html.H3("Ethics"),
-                html.P("All data was collected legally and user profiles are stored anonymously by removing usernames and user IDs after all data was collected. Statistics are kept broad. No particular user was singled out in these statistics. All data collected was publicly accessible data")
-            ])
+            html.A(href="#info", className="href-button", children=["Click here to read more"])
         ])
     ]),
 
@@ -123,6 +103,32 @@ app.layout = html.Div(children=[
 
         html.Div(id="graphs-wrapper", children=[
             html.Div(id="graphs", className="w10 wrapper-vertical", children=generate_country_graphs() )#+ worldwide_graphs)
+        ]),
+
+        html.Div(id="info", className="card w5", children=[
+            html.Div(className="p1 left wrapper-vertical", children=[
+                html.Div(children=[
+                    html.H3("Scraping Process"),
+                    html.P("Some tools that were used: Android Studio, Charles, Plotly, Pandas, Numpy"),
+                    html.Ol(children=[
+                        html.Li("Android Studio was used used to run the Barq app on a desktop environment"),
+                        html.Li("Charles was used to sniff packets sent to the Barq API from the Barq app"),
+                        html.Li("The Barq API URLs were analyzed to determine their inputs and outputs"),
+                        html.Li("A set of popular locations in the U.S. and other regions around the world were created"),
+                        html.Li("For each location, IDs of 10,000 users in the surrounding area were saved"),
+                        html.Li("A Raspberry Pi was set up with a fresh Barq account to send GET requests using the algorithm described above"),
+                        html.Li("All data was combined and cleaned, and duplicate users were removed")
+                    ])
+                ]),
+                html.Div(children=[
+                    html.H3("Why?"),
+                    html.P("Barq accounts contain information for real furs around the world. By performing statistics on this data, unique geographical and other patterns can be observed for real furs.")
+                ]),
+                html.Div(children=[
+                    html.H3("Ethics"),
+                    html.P("All data was collected legally and user profiles are stored anonymously by removing usernames and user IDs after all data was collected. Statistics are kept broad. No particular user was singled out in these statistics. All data collected was publicly accessible data")
+                ])
+            ])
         ])
     ]),
 

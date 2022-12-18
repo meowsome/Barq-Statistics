@@ -3,6 +3,10 @@ body {
     font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", "Segoe UI", Roboto, Ubuntu, sans-serif;
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 h1,
 h2,
 h3,
@@ -93,4 +97,12 @@ header img {
 
 .hidden {
     display: none;
+}
+
+.href-button {
+    text-decoration: none;
+    background: #eb2914;
+    border-radius: 10px;
+    color: white;
+    padding: 3px 5px;
 }
