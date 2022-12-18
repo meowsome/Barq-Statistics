@@ -4,3 +4,4 @@ __pycache__/
 *.pkl
 server/data/*
 .env
+server/cache/*

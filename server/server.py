@@ -1,10 +1,22 @@
-from dash import Dash, html, dcc, Output, Input
+from dash import Dash, html, dcc, Output, Input, DiskcacheManager
 from functions.retrieve_data import get_altered_df
 from functions.graph_generator import generic_most_common, count_per_state, count_per_country, generic_map, generate_graph, generic_histogram
 from datetime import date
 from functions.codes import country_codes
+import diskcache
 
-app = Dash(__name__)
+external_stylesheets = [{
+    'href': 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+    'rel': 'stylesheet',
+    'crossorigin': 'anonymous'
+}]
+
+app = Dash(
+    __name__,
+    background_callback_manager=DiskcacheManager(diskcache.Cache("./cache")),
+    title="Barq Statistics",
+    external_stylesheets=external_stylesheets
+)
 
 # df = get_altered_df()
 
@@ -103,7 +115,15 @@ app.layout = html.Div(children=[
             ])
         ]),
 
-        html.Div(id="graphs", className="w10 wrapper-vertical", children=generate_country_graphs() )#+ worldwide_graphs)
+        html.Div(id="loading", className="hidden", children=[
+            html.Div(className="wrapper-horizontal center w10", children=[
+                html.I(className="fa-3x fa fa-paw fa-spin p3")
+            ])
+        ]),
+
+        html.Div(id="graphs-wrapper", children=[
+            html.Div(id="graphs", className="w10 wrapper-vertical", children=generate_country_graphs() )#+ worldwide_graphs)
+        ])
     ]),
 
     html.Footer(className="w5 wrapper-vertical left", children=[
@@ -120,8 +140,14 @@ app.layout = html.Div(children=[
 
 # Toggle the "hidden" class name for the interactive and image maps 
 @app.callback(
-    [Output('graphs', 'children')],
-    [Input('country_code', 'value')]
+    output=[Output('graphs', 'children')],
+    inputs=[Input('country_code', 'value')],
+    background=True,
+    running=[
+        (Output("country_code", "disabled"), True, False), # ID, attribute, running action, finished action
+        (Output("graphs", "className"), "hidden", ""),
+        (Output("loading", "className"), "", "hidden")
+    ]
 )
 def update_output(value):
     return [generate_country_graphs(country_code=value)]
