@@ -113,7 +113,7 @@ app.layout = html.Div(children=[
                 html.Img(src="/assets/meowsome.png"),
                 "meowsome studio",
             ]),
-            html.P(f"Barq © {date.today().year} <insert name here>")
+            html.P(f"Barq © {date.today().year} barq.app")
         ])
     ])
 ])
