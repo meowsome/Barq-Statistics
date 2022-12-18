@@ -5,6 +5,22 @@ from .codes import state_codes, country_codes, top_per_country, top_per_state
 from dash import dcc
 from .retrieve_data import filter_by_country
 
+def get_count(df, country_code=None):
+    filtered_df = df
+
+    if country_code:
+        filtered_df = filter_by_country(filtered_df, country_code=country_code)
+
+    return filtered_df.shape[0]
+
+def get_sona_count(df, country_code=None):
+    filtered_df = df
+
+    if country_code:
+        filtered_df = filter_by_country(filtered_df, country_code=country_code)
+
+    return filtered_df['sonas'].explode().nunique()
+
 def generate_graph(figure, height='90vh'):
     return dcc.Graph(figure=figure, config={'displaylogo': False}, style={'width': '100%', 'height': height}, className="card")
 

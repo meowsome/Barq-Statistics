@@ -1,6 +1,6 @@
 from dash import Dash, html, dcc, Output, Input, DiskcacheManager
 from functions.retrieve_data import get_altered_df
-from functions.graph_generator import generic_most_common, count_per_state, count_per_country, generic_map, generate_graph, generic_histogram
+from functions.graph_generator import generic_most_common, count_per_state, count_per_country, generic_map, generate_graph, generic_histogram, get_count, get_sona_count
 from datetime import date
 from functions.codes import country_codes
 import diskcache
@@ -40,6 +40,12 @@ print("Starting app")
 #     generate_graph(figure=generic_map(df, scope="USA", column="groups", recursive=True, title="Most popular groups per state")),
 # ]
 
+def generate_stat_cards(country_code=False):
+    return [
+        stat_card_generator("Total Furries", get_count(df, country_code=country_code), country_code=country_code),
+        stat_card_generator("Unique Sona Species", get_sona_count(df, country_code=country_code), country_code=country_code)
+    ]
+
 def generate_country_graphs(country_code=False):
     country_graphs = [
         generate_graph(figure=generic_most_common(df, count=30, chart_type="bar", title="Top Fursonas", column="sonas", recursive=True, xlabel="Fursona", ylabel="Count", country_code=country_code), height='150vh'),
@@ -57,7 +63,10 @@ def generate_country_graphs(country_code=False):
 
     return country_graphs
 
-def stat_card_generator(title, stat):
+def stat_card_generator(title, stat, country_code=False):
+    if country_code:
+        title += f" in {country_code}"
+
     return html.Div(className="card w3", children=[
         html.Div(className="wrapper-vertical center p1", children=[
             html.H1(stat, className="center"),
@@ -83,11 +92,6 @@ app.layout = html.Div(children=[
     ]),
 
     html.Div(className="wrapper-vertical w10", children=[
-        html.Div(className="wrapper-horizontal", children=[
-            stat_card_generator("Total Furries", df.shape[0]),
-            stat_card_generator("Unique Sona Species", df['sonas'].explode().nunique()),
-            stat_card_generator("Countries with Furs", f"{df['countryCode'].nunique()} / 195")
-        ]),
         html.Div(className="card", children=[
             html.Div(className="p1", children=[
                 html.H3("Specify Country"),
@@ -102,7 +106,9 @@ app.layout = html.Div(children=[
         ]),
 
         html.Div(id="graphs-wrapper", children=[
-            html.Div(id="graphs", className="w10 wrapper-vertical", children=generate_country_graphs() )#+ worldwide_graphs)
+            html.Div(id="stat-cards", className="w10 wrapper-horizontal", children=generate_stat_cards()),
+            html.Div(id="graphs", className="w10 wrapper-vertical", children=generate_country_graphs()),
+            # html.Div(id="worldwide-graphs", className="w10 wrapper-vertical", children=worldwide_graphs)
         ]),
 
         html.Div(id="info", className="card w5", children=[
@@ -146,17 +152,17 @@ app.layout = html.Div(children=[
 
 # Toggle the "hidden" class name for the interactive and image maps 
 @app.callback(
-    output=[Output('graphs', 'children')],
+    output=[Output('graphs', 'children'), Output('stat-cards', 'children')],
     inputs=[Input('country_code', 'value')],
     background=True,
     running=[
         (Output("country_code", "disabled"), True, False), # ID, attribute, running action, finished action
-        (Output("graphs", "className"), "hidden", ""),
+        (Output("graphs-wrapper", "className"), "hidden", ""),
         (Output("loading", "className"), "", "hidden")
     ]
 )
 def update_output(value):
-    return [generate_country_graphs(country_code=value)]
+    return [generate_country_graphs(country_code=value), generate_stat_cards(country_code=value)]
 
 if __name__ == '__main__':
     app.run_server(debug=True)
