@@ -147,7 +147,7 @@ def generic_histogram(df, column, title, cap=None, bins=50, getlen=False, countr
     if cap:
         df_column = df_column.apply(lambda item: item if item < cap else cap)
 
-    fig = px.histogram(filtered_df, x=column, title=title, nbins=bins)
+    fig = px.histogram(df_column, x=column, title=title, nbins=bins)
 
     fig.layout.xaxis.fixedrange = True
     fig.layout.yaxis.fixedrange = True
