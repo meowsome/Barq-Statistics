@@ -18,15 +18,18 @@ app = Dash(
 
 print("Starting app")
 
-# worldwide_graphs = [
-#     generate_graph(figure=count_per_country(df)),
-#     generate_graph(figure=generic_map(df, scope="world", column="sonas", recursive=True, title="Most popular fursona per country")),
-#     generate_graph(figure=generic_map(df, scope="world", column="age", recursive=False, title="Most popular age per country")),
-#     generate_graph(figure=count_per_state(df)),
-#     generate_graph(figure=generic_map(df, scope="USA", column="sonas", recursive=True, title="Most popular fursona per state")),
-#     generate_graph(figure=generic_map(df, scope="USA", column="age", recursive=False, title="Most popular age per state")),
-#     generate_graph(figure=generic_map(df, scope="USA", column="groups", recursive=True, title="Most popular groups per state")),
-# ]
+def fetch_worldwide_graph(title):
+    with open(f"pickle/{title}.pkl", "rb") as pickle_file:
+        return pickle.load(pickle_file)
+
+def generate_worldwide_graphs():
+    return [
+        fetch_worldwide_graph("Most popular fursona per country"),
+        fetch_worldwide_graph("Most popular age per country"),
+        fetch_worldwide_graph("Most popular fursona per state"),
+        fetch_worldwide_graph("Most popular age per state"),
+        fetch_worldwide_graph("Most popular groups per state")
+    ]
 
 def fetch_stat(data_type, country_code):
     country = country_code if country_code else "null"
@@ -107,7 +110,7 @@ app.layout = html.Div(children=[
         html.Div(id="graphs-wrapper", children=[
             html.Div(id="stat-cards", className="w10 wrapper-horizontal", children=generate_stat_cards()),
             html.Div(id="graphs", className="w10 wrapper-vertical", children=generate_country_graphs()),
-            # html.Div(id="worldwide-graphs", className="w10 wrapper-vertical", children=worldwide_graphs)
+            html.Div(id="worldwide-graphs", className="w10 wrapper-vertical", children=generate_worldwide_graphs())
         ]),
 
         html.Div(id="info", className="card w5", children=[

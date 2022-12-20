@@ -1,4 +1,4 @@
-from functions.graph_generator import generic_most_common, generate_graph, generic_histogram, get_count, get_sona_count
+from functions.graph_generator import generic_most_common, generate_graph, generic_histogram, get_count, get_sona_count, count_per_country, generic_map, count_per_state
 from functions.codes import country_codes
 import pickle
 import json
@@ -12,15 +12,33 @@ from tqdm import tqdm
 with open("barq.pkl", "rb") as pickle_file:
     df = pickle.load(pickle_file)
 
-# worldwide_graphs = [
-#     generate_graph(figure=count_per_country(df)),
-#     generate_graph(figure=generic_map(df, scope="world", column="sonas", recursive=True, title="Most popular fursona per country")),
-#     generate_graph(figure=generic_map(df, scope="world", column="age", recursive=False, title="Most popular age per country")),
-#     generate_graph(figure=count_per_state(df)),
-#     generate_graph(figure=generic_map(df, scope="USA", column="sonas", recursive=True, title="Most popular fursona per state")),
-#     generate_graph(figure=generic_map(df, scope="USA", column="age", recursive=False, title="Most popular age per state")),
-#     generate_graph(figure=generic_map(df, scope="USA", column="groups", recursive=True, title="Most popular groups per state")),
-# ]
+def generate_worldwide_graphs():
+    worldwide_graphs = []
+
+    with tqdm(total=7) as pbar:
+        worldwide_graphs.append(generate_graph(figure=count_per_country(df)))
+        pbar.update(1)
+        
+        worldwide_graphs.append(generate_graph(figure=generic_map(df, scope="world", column="sonas", recursive=True, title="Most popular fursona per country")))
+        pbar.update(1)
+
+        worldwide_graphs.append(generate_graph(figure=generic_map(df, scope="world", column="age", recursive=False, title="Most popular age per country")))
+        pbar.update(1)
+
+        worldwide_graphs.append(generate_graph(figure=count_per_state(df)))
+        pbar.update(1)
+
+        worldwide_graphs.append(generate_graph(figure=generic_map(df, scope="USA", column="sonas", recursive=True, title="Most popular fursona per state")))
+        pbar.update(1)
+
+        worldwide_graphs.append(generate_graph(figure=generic_map(df, scope="USA", column="age", recursive=False, title="Most popular age per state")))
+        pbar.update(1)
+
+        worldwide_graphs.append(generate_graph(figure=generic_map(df, scope="USA", column="groups", recursive=True, title="Most popular groups per state")))
+        pbar.update(1)
+    
+    return worldwide_graphs
+    
 
 def generate_country_graphs(country_code=False):
     country_graphs = [
@@ -39,6 +57,7 @@ def generate_country_graphs(country_code=False):
 
     return country_graphs
 
+print("Generate country graphs")
 countries = list(country_codes.keys()) + [None]
 counts = {country: {"total": None, "species": None} for country in countries}
 for country in tqdm(countries):
@@ -50,3 +69,8 @@ for country in tqdm(countries):
 
 with open("data/counts.json", "w") as data_file:
     json.dump(counts, data_file)
+
+print("Generate worldwide graphs")
+for graph in generate_worldwide_graphs():
+    with open(f"pickle/{graph.figure['layout']['title']['text']}.pkl", 'wb') as pickle_file:
+        pickle.dump(graph, pickle_file)
