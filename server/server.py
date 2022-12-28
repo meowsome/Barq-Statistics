@@ -22,14 +22,20 @@ def fetch_worldwide_graph(title):
     with open(f"pickle/{title}.pkl", "rb") as pickle_file:
         return pickle.load(pickle_file)
 
-def generate_worldwide_graphs():
-    return [
+def generate_worldwide_graphs(country_code=None):
+    graphs = [
         fetch_worldwide_graph("Most popular fursona per country"),
-        fetch_worldwide_graph("Most popular age per country"),
-        fetch_worldwide_graph("Most popular fursona per state"),
-        fetch_worldwide_graph("Most popular age per state"),
-        fetch_worldwide_graph("Most popular groups per state")
+        fetch_worldwide_graph("Most popular age per country")
     ]
+
+    if country_code == "US":
+        graphs += [
+            fetch_worldwide_graph("Most popular fursona per state"),
+            fetch_worldwide_graph("Most popular age per state"),
+            fetch_worldwide_graph("Most popular groups per state")
+        ]
+
+    return graphs
 
 def fetch_stat(data_type, country_code):
     country = country_code if country_code else "null"
@@ -154,11 +160,11 @@ app.layout = html.Div(children=[
 
 # Toggle the "hidden" class name for the interactive and image maps 
 @app.callback(
-    output=[Output('graphs', 'children'), Output('stat-cards', 'children')],
+    output=[Output('graphs', 'children'), Output('stat-cards', 'children'), Output('worldwide-graphs', 'children')],
     inputs=[Input('country_code', 'value')]
 )
 def update_output(value):
-    return [generate_country_graphs(country_code=value), generate_stat_cards(country_code=value)]
+    return [generate_country_graphs(country_code=value), generate_stat_cards(country_code=value), generate_worldwide_graphs(country_code=value)]
 
 if __name__ == '__main__':
     app.run_server(debug=True)
