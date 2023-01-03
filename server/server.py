@@ -13,7 +13,29 @@ external_stylesheets = [{
 app = Dash(
     __name__,
     title="Barq Statistics",
-    external_stylesheets=external_stylesheets
+    external_stylesheets=external_stylesheets,
+    meta_tags=[{
+        'name': 'viewport',
+        'content': 'width=device-width, initial-scale=1.0'
+    }, {
+        'name': 'description',
+        'content': 'Statistics on furries around the world'
+    }, {
+        'property': 'og:title',
+        'content': 'Barq Statistics'
+    }, {
+        'property': 'og:description',
+        'content': 'Statistics on furries around the world'
+    }, {
+        'property': 'og:url',
+        'content': 'https://barq.meowso.me'
+    }, {
+        'property': 'og:type',
+        'content': 'website'
+    }, {
+        'property': 'og:image',
+        'content': 'https://barq.meowso.me/assets/logo.png'
+    }]
 )
 
 print("Starting app")
