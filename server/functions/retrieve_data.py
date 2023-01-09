@@ -55,11 +55,13 @@ def update_events(df):
 def update_sonas(df):
     print("Update sonas")
     df['sonas'] = generic_update(df, 'sonas', 'species', 'displayName')
+    df['sonas'] = df['sonas'].apply(lambda sonas: sonas if isinstance(sonas, list) else []) # Remove NaN
     return df
 
 def update_groups(df):
     print("Update groups")
     df['groups'] = generic_update(df, 'groups', 'group', 'displayName')
+    df['groups'] = df['groups'].apply(lambda groups: groups if isinstance(groups, list) else []) # Remove NaN
     return df
 
 def update_genders(df):
