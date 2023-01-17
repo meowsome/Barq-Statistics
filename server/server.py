@@ -47,15 +47,16 @@ def fetch_worldwide_graph(title):
 def generate_worldwide_graphs(country_code=None):
     graphs = [
         fetch_worldwide_graph("Most popular fursona per country"),
-        fetch_worldwide_graph("Most popular age per country")
+        fetch_worldwide_graph("Most popular age per country"),
+        fetch_worldwide_graph("Count per country")
     ]
 
     if country_code == "US":
         graphs += [
-            fetch_worldwide_graph("Most popular fursona per state"),
-            fetch_worldwide_graph("Most popular age per state"),
-            fetch_worldwide_graph("Most popular groups per state")
-        ]
+        fetch_worldwide_graph("Most popular fursona per state"),
+        fetch_worldwide_graph("Most popular age per state"),
+        fetch_worldwide_graph("Most popular groups per state")
+    ]
 
     return graphs
 
