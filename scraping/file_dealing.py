@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from tqdm import tqdm
 
 def merge():
     print("Merge start")
@@ -10,7 +11,7 @@ def merge():
 
     print("Getting all user profiles in ram")
     nums = get_count_of_files()
-    for num in list(range(nums)):
+    for num in tqdm(list(range(nums))):
         with open(f'data/all_detailed_profiles{num}.json', 'r') as file:
             response = file.read()
             profiles = json.loads(response)
@@ -41,7 +42,7 @@ def remove_dupes():
 
         print("Removing dupes")
         found_uuids = [p['uuid'] for p in all_detailed_users]
-        all_profiles_not_found_yet = [p for p in all_profiles if p['uuid'] not in found_uuids]
+        all_profiles_not_found_yet = [p for p in tqdm(all_profiles) if p['uuid'] not in found_uuids]
 
         print("Dumping to all_profiles_not_found_yet.json")
         with open('data/all_profiles_not_found_yet.json', 'w') as file:
