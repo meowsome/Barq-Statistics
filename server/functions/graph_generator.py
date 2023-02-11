@@ -50,7 +50,7 @@ def make_bar_chart(most_common, title, xlabel, ylabel):
     most_common = list(reversed(most_common))
     most_common = counter_to_df(most_common, xlabel, ylabel)
 
-    fig = px.bar(most_common, x=ylabel, y=xlabel, orientation='h', title=title, height=750)
+    fig = px.bar(most_common, x=ylabel, y=xlabel, orientation='h', title=title)
     fig.layout.xaxis.fixedrange = True
     fig.layout.yaxis.fixedrange = True
     return fig

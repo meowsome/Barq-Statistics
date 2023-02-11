@@ -42,7 +42,10 @@ print("Starting app")
 
 def fetch_worldwide_graph(title):
     with open(f"pickle/{title}.pkl", "rb") as pickle_file:
-        return pickle.load(pickle_file)
+        graph = pickle.load(pickle_file)
+        graph.className = None
+        graph.style['height'] = 400
+        return html.Div(className="w3", children=[html.Div(className="w10 card", children=[graph])])
 
 def generate_worldwide_graphs(country_code=None):
     graphs = [
@@ -75,7 +78,10 @@ def generate_stat_cards(country_code=False):
 def fetch_graph(title, country_code):
     country = f"in {country_codes[country_code]}" if country_code else "Worldwide"
     with open(f"pickle/{title} {country}.pkl", "rb") as pickle_file:
-        return pickle.load(pickle_file)
+        graph = pickle.load(pickle_file)
+        graph.className = None
+        graph.style['height'] = 400
+        return html.Div(className="w3", children=[html.Div(className="w10 card", children=[graph])])
 
 def generate_country_graphs(country_code=False):
     country_graphs = [
@@ -98,10 +104,12 @@ def stat_card_generator(title, stat, country_code=False):
     if country_code:
         title += f" in {country_codes[country_code]}"
 
-    return html.Div(className="card w3", children=[
-        html.Div(className="wrapper-vertical center p1", children=[
-            html.H1(stat, className="center"),
-            html.H4(title, className="center")
+    return html.Div(className="w3", children=[
+        html.Div(className="card", children=[
+            html.Div(className="wrapper-vertical center p1", children=[
+                html.H1(stat, className="center"),
+                html.H4(title, className="center")
+            ])
         ])
     ])
 
@@ -138,8 +146,8 @@ app.layout = html.Div(children=[
 
         html.Div(id="graphs-wrapper", children=[
             html.Div(id="stat-cards", className="w10 wrapper-horizontal", children=generate_stat_cards()),
-            html.Div(id="graphs", className="w10 wrapper-vertical", children=generate_country_graphs()),
-            html.Div(id="worldwide-graphs", className="w10 wrapper-vertical", children=generate_worldwide_graphs())
+            html.Div(id="graphs", className="w10 wrapper-horizontal", children=generate_country_graphs()),
+            html.Div(id="worldwide-graphs", className="w10 wrapper-horizontal", children=generate_worldwide_graphs())
         ]),
 
         html.Div(id="info", className="card w5", children=[

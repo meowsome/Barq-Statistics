@@ -21,24 +21,19 @@ p {
 }
 
 .w10 {
-    width: calc(100% - 25px);
+    width: calc(100%);
 }
-
-/* 
-.dash-graph {
-    margin: 10px;
-    border-radius: 15px;
-} */
 
 .card {
     background: white;
     border-radius: 15px;
     padding: 5px;
     margin: 10px;
+    width: calc(100% - 25px);
 }
 
 .w3 {
-    width: 33%;
+    width: 33.3%;
 }
 
 .wrapper-vertical {
@@ -49,6 +44,7 @@ p {
 .wrapper-horizontal {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .left {
