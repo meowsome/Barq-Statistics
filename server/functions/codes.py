@@ -343,7 +343,8 @@ def top_per_country(df, column, iterate):
         if column_list:
             most_common = Counter(column_list).most_common(1)[0]
 
-            column_per_country[country] = most_common
+            # Filter by only those counts above 2 to prevent oddly specific results 
+            column_per_country[country] = most_common if most_common[1] > 2 else (None, 1)
 
 
     column_per_country = {'country': [country_codes[country] for country in column_per_country if country in country_codes], column: [column_per_country[country][0] for country in column_per_country if country in country_codes]}
