@@ -51,3 +51,24 @@ def remove_dupes():
 
 def get_count_of_files():
     return len([item for item in os.listdir("./data") if re.match(r"all_detailed_profiles[\d]+\.json", item)])
+
+def remove_overall_dupes():
+    print('remove dupes again')
+
+    new_detailed_users = []
+    uuids = []
+
+    with open('data/all_detailed_profiles.json', 'r') as file:
+        response = file.read()
+        all_detailed_users = json.loads(response)
+
+        all_detailed_users = list(filter(None, all_detailed_users))
+
+    # Keep first occurance of each uuid
+    for user in tqdm(all_detailed_users):
+        if user['uuid'] not in uuids:
+            new_detailed_users.append(user)
+            uuids.append(user['uuid'])
+
+    with open('data/all_detailed_profiles.json', 'w') as write:
+        json.dump(new_detailed_users, write)
