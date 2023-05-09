@@ -5,6 +5,7 @@ from time import sleep
 from file_dealing import remove_dupes
 from file_dealing import merge
 from file_dealing import get_count_of_files
+from file_dealing import remove_overall_dupes
 from datetime import datetime
 import os
 
@@ -333,4 +334,8 @@ with open('./data/all_profiles_not_found_yet.json', 'r') as file:
 
 
 # merge()
+
+# Remove dupes, again
+remove_overall_dupes()
+
 print("Done")
