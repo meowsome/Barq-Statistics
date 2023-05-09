@@ -22,6 +22,8 @@ def get_sona_count(df, country_code=None):
     return filtered_df['sonas'].explode().nunique()
 
 def generate_graph(figure, height='90vh'):
+    figure.update_layout(margin=dict(t=40, l=0, r=0, b=0, pad=0),
+    autosize=True) # Make the graphs fit the whole card
     return dcc.Graph(figure=figure, config={'displaylogo': False}, style={'width': '100%', 'height': height}, className="card")
 
 def titleize(bad_list):
