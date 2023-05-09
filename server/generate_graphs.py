@@ -1,16 +1,11 @@
 from functions.graph_generator import generic_most_common, generate_graph, generic_histogram, get_count, get_sona_count, count_per_country, generic_map, count_per_state
+from functions.retrieve_data import get_altered_df
 from functions.codes import country_codes
 import pickle
 import json
 from tqdm import tqdm
 
-# df = get_altered_df()
-
-# with open("barq.pkl", 'wb') as pickle_file:
-#     pickle.dump(df, pickle_file)
-
-with open("barq.pkl", "rb") as pickle_file:
-    df = pickle.load(pickle_file)
+df = get_altered_df()
 
 def generate_worldwide_graphs():
     worldwide_graphs = []
