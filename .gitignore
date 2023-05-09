@@ -5,3 +5,4 @@ __pycache__/
 server/data/*
 .env
 server/cache/*
+locations.json
