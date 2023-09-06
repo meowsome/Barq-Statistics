@@ -44,7 +44,7 @@ def fetch_worldwide_graph(title):
     with open(f"pickle/{title}.pkl", "rb") as pickle_file:
         graph = pickle.load(pickle_file)
         graph.className = None
-        graph.style['height'] = 400
+        graph.style['height'] = 500
         return html.Div(className="w3", children=[html.Div(className="w10 card", children=[graph])])
 
 def generate_worldwide_graphs(country_code=None):
@@ -80,7 +80,7 @@ def fetch_graph(title, country_code):
     with open(f"pickle/{title} {country}.pkl", "rb") as pickle_file:
         graph = pickle.load(pickle_file)
         graph.className = None
-        graph.style['height'] = 400
+        graph.style['height'] = 500
         return html.Div(className="w3", children=[html.Div(className="w10 card", children=[graph])])
 
 def generate_country_graphs(country_code=False):
