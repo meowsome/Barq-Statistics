@@ -3,15 +3,8 @@ https://towardsdatascience.com/data-scraping-android-apps-b15b93aa23aa
 Download APK from apkpure
 Run through APK-MITM CLI tool
 Drag+Drop to Android Studio to install
-On emulator, go to https://chls.pro/ssl
-Navigate to settings, accept the user CA certificate
-Charles, turn off local windows proxy: Proxy > Windows Proxy
-Proxy > SSL Proxy settings
-Toggle on
-Add new: *.*
-Go to Android Studio settings > settings > proxy
-Find localhost by going to Charles > Help > Local IP address
-Set proxy to local IP port 8888
+Install HTTP Toolkit on your PC and choose Android Device via ADB
+Accept request on android simulator
 Go to barq
 Investigate requests
 

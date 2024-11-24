@@ -1,0 +1,30 @@
+{
+    "profile_overview": {
+        "operationName": "ProfileOverview",
+        "variables": {
+            "offset": 0,
+            "limit": 60,
+            "search": {
+                "location": {
+                    "placeId": "832",
+                    "latitude": 67.798447,
+                    "longitude": -152.479556,
+                    "type": "distance"
+                }
+            }
+        },
+        "query": "query ProfileOverview($search: ProfileSearchInput!, $offset: Int = 0, $limit: Int = 30) {\n  profiles(search: $search, offset: $offset, limit: $limit) {\n    uuid\n    displayName\n    relationType\n    images {\n      image {\n        ...UploadedImage\n        __typename\n      }\n      __typename\n    }\n    location {\n      type\n      distance\n      searchDistance\n      place {\n        place\n        countryCode\n        __typename\n      }\n      __typename\n    }\n    roles\n    __typename\n  }\n}\n\nfragment UploadedImage on UploadedImage {\n  uuid\n  isExplicit\n  contentRating\n  __typename\n}\n"
+    },
+    "profile_detail": {
+        "operationName": "ProfileDetail",
+        "variables": {
+            "uuid": "d04a15bd-ca07-4543-996f-058f12ac12e7",
+            "isAd": false,
+            "location": {
+                "longitude": -73.9866,
+                "latitude": 40.7306
+            }
+        },
+        "query": "query ProfileDetail($uuid: String!, $location: SearchLocationInput) {\n  profile(uuid: $uuid, location: $location) {\n    ...DetailProfile\n    __typename\n  }\n  __typename\n}\n\nfragment DetailProfile on Profile {\n  ...OverviewProfile\n  isAdOptIn\n  isBirthday\n  age\n  shareHash\n  awards {\n    id\n    createdAt\n    award {\n      ...Award\n      __typename\n    }\n    __typename\n  }\n  privacySettings {\n    ...PrivacySettings\n    __typename\n  }\n  images {\n    ...GalleryProfileImage\n    __typename\n  }\n  bio {\n    ...ProfileBioWithInterests\n    __typename\n  }\n  bioAd {\n    ...ProfileBioAd\n    __typename\n  }\n  sonas {\n    ...Sona\n    __typename\n  }\n  kinks {\n    ...ProfileKink\n    __typename\n  }\n  groups {\n    ...ProfileGroup\n    __typename\n  }\n  events {\n    ...ProfileEvent\n    __typename\n  }\n  socialAccounts {\n    ...SocialAccount\n    __typename\n  }\n  __typename\n}\n\nfragment OverviewProfile on Profile {\n  ...MinimalProfile\n  profileImageAd: profileImage(isAd: true) {\n    ...MinimalProfileImage\n    __typename\n  }\n  location {\n    ...ProfileLocation\n    __typename\n  }\n  __typename\n}\n\nfragment MinimalProfile on Profile {\n  id\n  uuid\n  displayName\n  username\n  relationType\n  roles\n  profileImage {\n    ...MinimalProfileImage\n    __typename\n  }\n  __typename\n}\n\nfragment MinimalProfileImage on ProfileImage {\n  id\n  image {\n    ...MinimalUploadedImage\n    __typename\n  }\n  accessPermission\n  __typename\n}\n\nfragment MinimalUploadedImage on UploadedImage {\n  id\n  uuid\n  url\n  contentRating\n  blurHash\n  __typename\n}\n\nfragment ProfileLocation on ProfileLocation {\n  type\n  distance\n  place {\n    ...Place\n    __typename\n  }\n  homePlace {\n    ...Place\n    __typename\n  }\n  __typename\n}\n\nfragment Place on Place {\n  id\n  place\n  region\n  country\n  countryCode\n  longitude\n  latitude\n  __typename\n}\n\nfragment Award on Award {\n  id\n  name\n  title\n  description\n  icon\n  rarity\n  series\n  createdAt\n  __typename\n}\n\nfragment PrivacySettings on PrivacySettings {\n  startChat\n  viewAge\n  viewAd\n  viewKinks\n  viewProfile\n  viewPreciseLocation\n  showLastOnline\n  showOnMap\n  __typename\n}\n\nfragment GalleryProfileImage on ProfileImage {\n  ...MinimalProfileImage\n  likeCount\n  hasLiked\n  isAd\n  __typename\n}\n\nfragment ProfileBioWithInterests on ProfileBio {\n  ...ProfileBio\n  ...ProfileInterests\n  __typename\n}\n\nfragment ProfileBio on ProfileBio {\n  id\n  biography\n  genders\n  languages\n  relationshipStatus\n  sexualOrientation\n  __typename\n}\n\nfragment ProfileInterests on ProfileBio {\n  hobbies {\n    ...Interest\n    __typename\n  }\n  __typename\n}\n\nfragment Interest on Interest {\n  id\n  interest\n  __typename\n}\n\nfragment ProfileBioAd on ProfileBioAd {\n  id\n  biography\n  sexPositions\n  behaviour\n  safeSex\n  canHost\n  __typename\n}\n\nfragment Sona on Sona {\n  id\n  displayName\n  images {\n    id\n    __typename\n  }\n  description\n  hasFursuit\n  species {\n    ...Species\n    __typename\n  }\n  __typename\n}\n\nfragment Species on Species {\n  id\n  displayName\n  popularity\n  __typename\n}\n\nfragment ProfileKink on ProfileKink {\n  id\n  kink {\n    ...Kink\n    __typename\n  }\n  pleasureReceive\n  pleasureGive\n  __typename\n}\n\nfragment Kink on Kink {\n  id\n  displayName\n  categoryName\n  isVerified\n  isSinglePlayer\n  __typename\n}\n\nfragment ProfileGroup on ProfileGroup {\n  group {\n    ...MinimalGroup\n    __typename\n  }\n  threadCount\n  replyCount\n  __typename\n}\n\nfragment MinimalGroup on Group {\n  id\n  uuid\n  displayName\n  isAd\n  contentRating\n  image {\n    ...MinimalUploadedImage\n    __typename\n  }\n  __typename\n}\n\nfragment ProfileEvent on ProfileEvent {\n  event {\n    id\n    uuid\n    displayName\n    isAd\n    contentRating\n    eventBeginAt\n    eventEndAt\n    image {\n      ...MinimalUploadedImage\n      __typename\n    }\n    __typename\n  }\n  isWaitingList\n  __typename\n}\n\nfragment SocialAccount on ProfileSocialAccount {\n  id\n  socialNetwork\n  isVerified\n  url\n  displayName\n  value\n  accessPermission\n  __typename\n}"
+    }
+}

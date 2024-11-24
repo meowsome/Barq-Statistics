@@ -1,0 +1,286 @@
+{
+    "data": {
+      "profile": {
+        "id": "000000",
+        "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "displayName": "testUsername",
+        "username": null,
+        "relationType": null,
+        "roles": null,
+        "profileImage": {
+          "id": "0000000",
+          "image": {
+            "id": "0000000",
+            "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "url": "https://assets.barq.app/image/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.jpeg",
+            "contentRating": "safe",
+            "__typename": "UploadedImage"
+          },
+          "accessPermission": "public",
+          "__typename": "ProfileImage"
+        },
+        "__typename": "Profile",
+        "profileImageAd": {
+          "id": "000000",
+          "image": {
+            "id": "000000",
+            "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "url": "https://assets.barq.app/image/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.jpeg",
+            "contentRating": "safe",
+            "__typename": "UploadedImage"
+          },
+          "accessPermission": "public",
+          "__typename": "ProfileImage"
+        },
+        "location": {
+          "type": "manual",
+          "distance": 1773,
+          "place": {
+            "id": "0000",
+            "place": "Place",
+            "region": "Region",
+            "country": "Country",
+            "countryCode": "US",
+            "longitude": 0.0000,
+            "latitude": 0.0000,
+            "__typename": "Place"
+          },
+          "homePlace": null,
+          "__typename": "ProfileLocation"
+        },
+        "isAdOptIn": true,
+        "isBirthday": false,
+        "age": 20,
+        "awards": [],
+        "privacySettings": {
+          "startChat": "mutuals",
+          "viewAge": "public",
+          "viewAd": "public",
+          "viewKinks": "public",
+          "viewProfile": "public",
+          "viewPreciseLocation": "mutuals",
+          "showLastOnline": true,
+          "showOnMap": false,
+          "__typename": "PrivacySettings"
+        },
+        "images": [
+          {
+            "id": "000000",
+            "image": {
+              "id": "000000",
+              "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+              "url": "https://assets.barq.app/image/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.jpeg",
+              "contentRating": "safe",
+              "__typename": "UploadedImage"
+            },
+            "accessPermission": "public",
+            "__typename": "ProfileImage",
+            "likeCount": 0,
+            "hasLiked": false,
+            "isAd": false
+          },
+          {
+            "id": "000001",
+            "image": {
+              "id": "000001",
+              "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+              "url": "https://assets.barq.app/image/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.jpeg",
+              "contentRating": "safe",
+              "__typename": "UploadedImage"
+            },
+            "accessPermission": "public",
+            "__typename": "ProfileImage",
+            "likeCount": 0,
+            "hasLiked": false,
+            "isAd": false
+          }
+        ],
+        "bio": {
+          "id": "000000",
+          "biography": "biooo",
+          "genders": [
+            "Non-Binary"
+          ],
+          "languages": null,
+          "relationshipStatus": null,
+          "sexualOrientation": "gay",
+          "__typename": "ProfileBio",
+          "hobbies": [
+            {
+              "id": "33",
+              "interest": "Music",
+              "__typename": "Interest"
+            },
+            {
+              "id": "35",
+              "interest": "Video Games",
+              "__typename": "Interest"
+            }
+          ]
+        },
+        "bioAd": {
+          "id": "000000",
+          "biography": "bio ad",
+          "sexPositions": null,
+          "behaviour": [
+            "submissive"
+          ],
+          "safeSex": "always",
+          "canHost": null,
+          "__typename": "ProfileBioAd"
+        },
+        "sonas": [
+          {
+            "id": "000000",
+            "displayName": "Sona Name",
+            "images": [
+              {
+                "id": "0000000",
+                "__typename": "ProfileImage"
+              },
+              {
+                "id": "0000000",
+                "__typename": "ProfileImage"
+              }
+            ],
+            "description": null,
+            "hasFursuit": false,
+            "species": {
+              "id": "0",
+              "displayName": "Fox",
+              "popularity": null,
+              "__typename": "Species"
+            },
+            "__typename": "Sona"
+          }
+        ],
+        "kinks": [
+          {
+            "id": null,
+            "kink": {
+              "id": "31",
+              "displayName": "Teasing",
+              "categoryName": "General",
+              "isVerified": true,
+              "isSinglePlayer": false,
+              "__typename": "Kink"
+            },
+            "pleasureReceive": 2,
+            "pleasureGive": null,
+            "__typename": "ProfileKink"
+          },
+          {
+            "id": null,
+            "kink": {
+              "id": "16",
+              "displayName": "Anal Penetration",
+              "categoryName": "Anal Sex & Play",
+              "isVerified": true,
+              "isSinglePlayer": false,
+              "__typename": "Kink"
+            },
+            "pleasureReceive": 1,
+            "pleasureGive": 1,
+            "__typename": "ProfileKink"
+          },
+          {
+            "id": null,
+            "kink": {
+              "id": "15",
+              "displayName": "Rimming",
+              "categoryName": "Anal Sex & Play",
+              "isVerified": true,
+              "isSinglePlayer": false,
+              "__typename": "Kink"
+            },
+            "pleasureReceive": -1,
+            "pleasureGive": -1,
+            "__typename": "ProfileKink"
+          },
+          {
+            "id": null,
+            "kink": {
+              "id": "17",
+              "displayName": "Blowjobs",
+              "categoryName": "Oral Sex & Play",
+              "isVerified": true,
+              "isSinglePlayer": false,
+              "__typename": "Kink"
+            },
+            "pleasureReceive": 1,
+            "pleasureGive": 1,
+            "__typename": "ProfileKink"
+          }
+        ],
+        "groups": [
+          {
+            "group": {
+              "id": "0",
+              "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+              "displayName": "Test Group",
+              "isAd": false,
+              "contentRating": null,
+              "image": {
+                "id": "0000",
+                "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "url": "https://assets.barq.app/image/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.jpeg",
+                "contentRating": null,
+                "__typename": "UploadedImage"
+              },
+              "__typename": "Group"
+            },
+            "threadCount": 0,
+            "replyCount": 0,
+            "__typename": "ProfileGroup"
+          }
+        ],
+        "events": [
+          {
+            "event": {
+              "id": "00000",
+              "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+              "displayName": "Test Event",
+              "isAd": false,
+              "contentRating": null,
+              "eventBeginAt": "2025-08-22T19:00:00.000Z",
+              "eventEndAt": "2025-08-25T01:00:00.000Z",
+              "image": {
+                "id": "0000000",
+                "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                "url": "https://assets.barq.app/image/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.jpeg",
+                "contentRating": "safe",
+                "blurHash": null,
+                "__typename": "UploadedImage"
+              },
+              "__typename": "Convention"
+            },
+            "isWaitingList": false,
+            "__typename": "ProfileEvent"
+          }
+        ],
+        "socialAccounts": [
+          {
+            "id": "000000000000",
+            "socialNetwork": "telegram",
+            "isVerified": false,
+            "url": null,
+            "displayName": "-",
+            "value": "Test",
+            "accessPermission": "private",
+            "__typename": "ProfileSocialAccount"
+          },
+          {
+            "id": "000000000000",
+            "socialNetwork": "discord",
+            "isVerified": false,
+            "url": null,
+            "displayName": "-",
+            "value": "Mutuals Only",
+            "accessPermission": "mutuals",
+            "__typename": "ProfileSocialAccount"
+          }
+        ]
+      },
+      "__typename": "Query"
+    }
+  }

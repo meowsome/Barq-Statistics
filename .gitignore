@@ -6,3 +6,4 @@ server/data/*
 .env
 server/cache/*
 locations.json
+scraping/barqscrapingvenv/*
