@@ -5,7 +5,7 @@ from time import sleep
 from datetime import datetime
 import os
 from dotenv import load_dotenv
-from database import add_row
+from database import add_row, is_uuid_already_scraped
 load_dotenv()
 
 print(f"\n\nStarting brand new scrape {datetime.strftime(datetime.now(), '%m/%d/%Y %H:%M:%S')}")
@@ -22,6 +22,12 @@ headers = {
     "Authorization": "Bearer " + authorization,
     'Content-type': 'application/json'
 }
+
+def save_profile(detailed_profile):         
+    add_row(detailed_profile) # Save to database
+
+    too_far_away = detailed_profile['location']['distance'] > 500
+    return too_far_away
 
 for location in locations:
     print(f"Scraping location {location['location']}")
@@ -54,41 +60,34 @@ for location in locations:
                 # Get details for each individual profile found
                 print(f"Scraping batch of {len(profiles)} profiles")
                 for profile in tqdm(profiles):
-                    body_profile_detail['variables']['uuid'] = profile['uuid'] # Specify uuid to get details of
+                    if not is_uuid_already_scraped(profile['uuid']):
+                        body_profile_detail['variables']['uuid'] = profile['uuid'] # Specify uuid to get details of
 
-                    res = requests.post(api_url, data=json.dumps(body_profile_detail), headers=headers) # Send request
-                    try:
-                        raw_json = json.loads(res.text)
-                    except (ValueError, requests.exceptions.SSLError):
-                        print("Json decode err")
-                    else:
-                        if 'data' in raw_json:
-                            detailed_profile = raw_json['data']['profile']
-
-                            if detailed_profile:
-                                print(f"Saving {detailed_profile['displayName']}")
-                                add_row(detailed_profile) # Save to database
-
-                                if detailed_profile['location']['distance'] > 500:
-                                    too_far_away = True
-                            elif 'extensions' in raw_json and raw_json['extensions']['code'] == "RATE_LIMIT_EXCEEDED":
-                                print("Rate limit exceeded, waiting...")
-                                sleep(60)
-                                print("Trying again...")
-                                
-                                print(f"Saving {detailed_profile['displayName']}")
-                                add_row(detailed_profile) # Save to database
-
-                                if detailed_profile['location']['distance'] > 500:
-                                    too_far_away = True
-                            else:
-                                print("Profile data empty")
-                                print(raw_json)
+                        res = requests.post(api_url, data=json.dumps(body_profile_detail), headers=headers) # Send request
+                        try:
+                            raw_json = json.loads(res.text)
+                        except (ValueError, requests.exceptions.SSLError):
+                            print("Json decode err")
                         else:
-                            print("Invalid json error")
-                        
-                    sleep(5)
-                count_in_location += len(profiles)
+                            if 'data' in raw_json:
+                                detailed_profile = raw_json['data']['profile']
+
+                                if detailed_profile:
+                                    too_far_away = save_profile(detailed_profile)
+                                elif 'extensions' in raw_json and raw_json['extensions']['code'] == "RATE_LIMIT_EXCEEDED":
+                                    print("Rate limit exceeded, waiting...")
+                                    sleep(60)
+                                    print("Trying again...")
+
+                                    too_far_away = save_profile(detailed_profile)
+                                else:
+                                    print("Profile data empty")
+                                    print(raw_json)
+                            else:
+                                print("Invalid json error")
+                            
+                        sleep(5)
+                        count_in_location += len(profiles)
                      
             else:
                 print("Invalid json error")

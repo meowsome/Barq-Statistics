@@ -83,3 +83,11 @@ def add_row(user_data):
 
     mysql_db.commit()
     cur.close()
+
+def is_uuid_already_scraped(uuid):
+    cur = mysql_db.cursor(buffered=True)
+    exists_sql = "SELECT uuid from users WHERE EXISTS (SELECT * FROM users WHERE uuid = %s)"
+    cur.execute(exists_sql, (uuid, ))
+    exists_count = cur.rowcount
+    cur.close()
+    return exists_count > 0
