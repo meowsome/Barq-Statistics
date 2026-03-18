@@ -16,11 +16,15 @@ with open('locations.json') as location_json:
 with open('bodies.json') as bodies_json:
     bodies = json.load(bodies_json)
     
-api_url = "https://api.barq.social/graphql"
-authorization = os.getenv("barq_authorization")
+api_url = "https://api.barq.app/graphql"
+authorization = os.getenv("BARQ_AUTHORIZATION")
 headers = {
     "Authorization": "Bearer " + authorization,
-    'Content-type': 'application/json'
+    'Content-type': 'application/json',
+    "host": "api.barq.app",
+    "user-agent": "BARQ/2.10.0+265",
+    "accept-encoding": "gzip",
+    "accept": "*/*"
 }
 
 def save_profile(detailed_profile):         
@@ -30,18 +34,19 @@ def save_profile(detailed_profile):
     return too_far_away
 
 for location in locations:
-    print(f"Scraping location {location['location']}")
+    print(f"Scraping location {location['city']}")
     offset = 0
-    increment = 60
+    increment = 30
     too_far_away = False
     count_in_location = 0
 
-    body = location['search']
+    body = bodies['profile_overview']
+    body['variables']['filters']['location']['latitude'] = location['lat']
+    body['variables']['filters']['location']['longitude'] = location['lon']
+
     body_profile_detail = bodies['profile_detail']
-    body_profile_detail['variables']['location']['latitude'] = body['variables']['search']['location']['latitude']
-    body_profile_detail['variables']['location']['longitude'] = body['variables']['search']['location']['longitude']
-
-
+    body_profile_detail['variables']['location']['latitude'] = location['lat']
+    body_profile_detail['variables']['location']['longitude'] = location['lon']
 
     # Scrape 60 furs at a time
     while not too_far_away:
@@ -53,7 +58,7 @@ for location in locations:
         else:
             if 'data' in raw_json:
                 offset += increment
-                body['variables']['offset'] = offset
+                body['variables']['cursor'] = str(offset)
 
                 profiles = raw_json['data']['profiles']
 
@@ -94,7 +99,7 @@ for location in locations:
 
             sleep(10)
 
-    print(f"Done scraping {count_in_location} furs in location {location['location']}")
+    print(f"Done scraping {count_in_location} furs in location {location['city']}")
     count_in_location = 0
 
 print("Done")
