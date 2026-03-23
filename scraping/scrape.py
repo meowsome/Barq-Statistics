@@ -44,6 +44,7 @@ for location in locations:
     body = bodies['profile_overview']
     body['variables']['filters']['location']['latitude'] = location['lat']
     body['variables']['filters']['location']['longitude'] = location['lon']
+    body['variables']['cursor'] = str(offset)
 
     body_profile_detail = bodies['profile_detail']
     body_profile_detail['variables']['location']['latitude'] = location['lat']
