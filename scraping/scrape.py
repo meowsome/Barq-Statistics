@@ -86,12 +86,14 @@ for location in locations:
 
                                 if detailed_profile:
                                     too_far_away = save_profile(detailed_profile)
+                                    count_in_location += 1
                                 elif 'extensions' in raw_json and raw_json['extensions']['code'] == "RATE_LIMIT_EXCEEDED":
                                     print("Rate limit exceeded, waiting...")
                                     sleep(60)
                                     print("Trying again...")
 
                                     too_far_away = save_profile(detailed_profile)
+                                    count_in_location += 1
                                 else:
                                     print("Profile data empty")
                                     print(raw_json)
@@ -99,7 +101,6 @@ for location in locations:
                                 print("Invalid json error")
                             
                         sleep(5)
-                        count_in_location += len(profiles)
                      
             else:
                 print("Invalid json error")
