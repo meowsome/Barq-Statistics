@@ -6,4 +6,7 @@ server/data/*
 .env
 server/cache/*
 locations.json
-scraping/barqscrapingvenv/*
+scraping/.venv/*
+scraping/data/*
+.venv/
+server/express/node_modules/
