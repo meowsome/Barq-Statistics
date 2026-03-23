@@ -38,6 +38,7 @@ for location in locations:
     offset = 0
     increment = 30
     too_far_away = False
+    zero_results = False
     count_in_location = 0
 
     body = bodies['profile_overview']
@@ -48,8 +49,8 @@ for location in locations:
     body_profile_detail['variables']['location']['latitude'] = location['lat']
     body_profile_detail['variables']['location']['longitude'] = location['lon']
 
-    # Scrape 60 furs at a time
-    while not too_far_away:
+    # Scrape 30 furs at a time
+    while not too_far_away and not zero_results:
         res = requests.post(api_url, data=json.dumps(body), headers=headers)
         try:
             raw_json = json.loads(res.text)
@@ -61,6 +62,12 @@ for location in locations:
                 body['variables']['cursor'] = str(offset)
 
                 profiles = raw_json['data']['profiles']
+
+                if len(profiles) == 0:
+                    print("Zero profiles found, continuing")
+                    print(raw_json)
+                    zero_results = True
+                    continue
 
                 # Get details for each individual profile found
                 print(f"Scraping batch of {len(profiles)} profiles")
