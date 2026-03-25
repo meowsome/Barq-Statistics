@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import 'leaflet.heat/dist/leaflet-heat.js'
+import 'leaflet.heat'
 
 export default function Map() {
     const [points, setPoints] = useState("");
@@ -23,12 +23,12 @@ export default function Map() {
                 setPoints(data)
 
                 // Add coords as heatmap as layer on leaflet map
-                L.heatLayer(data).addTo(map);
+                L.heatLayer(data, {minOpacity: 0.3}).addTo(map);
             })
         }
         
         isInitialized.current = true;
     }, []);
 
-    return <div id="map" style={{ height: "100vh" }}></div>;
+    return <div id="map" style={{ height: "100vh", width: "100%" }}></div>;
 }
