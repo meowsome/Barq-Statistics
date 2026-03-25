@@ -30,8 +30,13 @@ headers = {
 def save_profile(detailed_profile):         
     add_row(detailed_profile) # Save to database
 
-    too_far_away = detailed_profile['location']['distance'] > 500
-    return too_far_away
+    if detailed_profile['location']['distance'] is not None:
+        too_far_away = detailed_profile['location']['distance'] > 500
+        return too_far_away
+    else:
+        print("Profile missing distance")
+        print(detailed_profile)
+        return False
 
 for location in locations:
     print(f"Scraping location {location['city']}")
