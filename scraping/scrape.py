@@ -6,6 +6,7 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 from database import add_row, is_uuid_already_scraped
+import sys
 load_dotenv()
 
 print(f"\n\nStarting brand new scrape {datetime.strftime(datetime.now(), '%m/%d/%Y %H:%M:%S')}")
@@ -45,6 +46,7 @@ for location in locations:
     too_far_away = False
     zero_results = False
     count_in_location = 0
+    connection_error = False
 
     body = bodies['profile_overview']
     body['variables']['filters']['location']['latitude'] = location['lat']
@@ -81,32 +83,47 @@ for location in locations:
                     if not is_uuid_already_scraped(profile['uuid']):
                         body_profile_detail['variables']['uuid'] = profile['uuid'] # Specify uuid to get details of
 
-                        res = requests.post(api_url, data=json.dumps(body_profile_detail), headers=headers) # Send request
+                        # Scrape profile details
                         try:
-                            raw_json = json.loads(res.text)
-                        except (ValueError, requests.exceptions.SSLError):
-                            print("Json decode err")
+                            res = requests.post(api_url, data=json.dumps(body_profile_detail), headers=headers)
+                        except (requests.exceptions.ConnectionError):
+                            # If there is a connection error, wait 5 min and attempt scraping next person. If connection error again, exit program
+                            if connection_error:
+                                print("Connection error happened twice, exiting program")
+                                sys.exit()
+
+                            print("Connection error happened once, waiting 5 min and retrying...")
+                            connection_error = True
+                            sleep(300)
+                            continue
                         else:
-                            if 'data' in raw_json:
-                                detailed_profile = raw_json['data']['profile']
+                            connection_error = False
 
-                                if detailed_profile:
-                                    too_far_away = save_profile(detailed_profile)
-                                    count_in_location += 1
-                                elif 'extensions' in raw_json and raw_json['extensions']['code'] == "RATE_LIMIT_EXCEEDED":
-                                    print("Rate limit exceeded, waiting...")
-                                    sleep(60)
-                                    print("Trying again...")
-
-                                    too_far_away = save_profile(detailed_profile)
-                                    count_in_location += 1
-                                else:
-                                    print("Profile data empty")
-                                    print(raw_json)
+                            try:
+                                raw_json = json.loads(res.text)
+                            except (ValueError, requests.exceptions.SSLError):
+                                print("Json decode err")
                             else:
-                                print("Invalid json error")
-                            
-                        sleep(5)
+                                if 'data' in raw_json:
+                                    detailed_profile = raw_json['data']['profile']
+
+                                    if detailed_profile:
+                                        too_far_away = save_profile(detailed_profile)
+                                        count_in_location += 1
+                                    elif 'extensions' in raw_json and raw_json['extensions']['code'] == "RATE_LIMIT_EXCEEDED":
+                                        print("Rate limit exceeded, waiting...")
+                                        sleep(60)
+                                        print("Trying again...")
+
+                                        too_far_away = save_profile(detailed_profile)
+                                        count_in_location += 1
+                                    else:
+                                        print("Profile data empty")
+                                        print(raw_json)
+                                else:
+                                    print("Invalid json error")
+                                
+                            sleep(5)
                      
             else:
                 print("Invalid json error")
