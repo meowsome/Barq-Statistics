@@ -10,17 +10,17 @@ const Map = dynamic(() => import("./Map"), {ssr: false});
 export default function App() {
   return (
     <div className="flex">
-      <div className="w-3/4">
-        <Map />;
+      <div className="w-2/3">
+        <Map />
       </div>
-      <div className="w-1/4" >
+      <div className="w-1/3 p-4 overflow-auto h-screen" >
         <h1 className="text-2xl font-medium">
           Hello world!
         </h1>
         
         <div className="flex flex-wrap">
-<TotalCount />
-        <GenderChart />
+          <TotalCount />
+          <GenderChart />
           <OrientationChart />
           <RelationshipChart />
           <FursonaChart />
