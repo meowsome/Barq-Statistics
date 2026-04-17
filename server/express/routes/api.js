@@ -36,6 +36,12 @@ router.get("/coordinates", async (req, res) => {
     // Get count of each occurance of coordinate from database
     const results = await collection.aggregate([
         {
+$match: {
+                "location.place.latitude": { $ne: null },
+                "location.place.longitude": { $ne: null }
+            }
+        },
+        {
             $group: {
                 _id: {
                     latitude: "$location.place.latitude",
