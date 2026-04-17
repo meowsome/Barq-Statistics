@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import {GenderChart, OrientationChart, RelationshipChart} from "./charts/PieCharts";
+import TotalCount from "./charts/Counts";
 
 const Map = dynamic(() => import("./Map"), {ssr: false});
 
@@ -17,6 +18,7 @@ export default function App() {
         </h1>
         
         <div className="flex flex-wrap">
+<TotalCount />
         <GenderChart />
           <OrientationChart />
           <RelationshipChart />
