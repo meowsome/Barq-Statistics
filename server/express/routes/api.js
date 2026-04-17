@@ -130,6 +130,25 @@ router.get("/relationship", async (req, res) => {
 
     res.send(counts).status(200);
 });
+
+router.get("/fursonas", async (req, res) => {
+    const collection = await db.collection(process.env.MONGODB_COLLECTION);
+
+    const results = await collection.aggregate([
+        { $unwind: "$sonas" },
+        {
+            $group: {
+                _id: {
+                    species: "$sonas.species.displayName",
+                },
+                count: { $sum: 1 }
+            }
+        },
+        { $sort: { count: -1 } },
+        { $limit: 20 }
+    ]).toArray();
+
+    const counts = arrayToLabelValues(results.reverse(), 'species', 'count', 'bar');
     
     res.send(counts).status(200);
 });
