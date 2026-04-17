@@ -23,7 +23,7 @@ headers = {
     "Authorization": "Bearer " + authorization,
     'Content-type': 'application/json',
     "host": "api.barq.app",
-    "user-agent": "BARQ/2.10.0+265",
+    "user-agent": "BARQ/2.12.0+272",
     "accept-encoding": "gzip",
     "accept": "*/*"
 }
@@ -59,76 +59,102 @@ for location in locations:
 
     # Scrape 30 furs at a time
     while not too_far_away and not zero_results:
-        res = requests.post(api_url, data=json.dumps(body), headers=headers)
         try:
-            raw_json = json.loads(res.text)
-        except ValueError:
-            print("Json decode err")
+            res = requests.post(api_url, data=json.dumps(body), headers=headers)
+        except (requests.exceptions.ConnectionError):
+            # If there is a connection error, wait 5 min and attempt scraping next person. If connection error again, exit program
+            if connection_error:
+                print("Connection error happened twice, exiting program")
+                sys.exit()
+
+            print("Connection error happened once, waiting 5 min and retrying...")
+            connection_error = True
+            sleep(300)
+            continue
         else:
-            if 'data' in raw_json:
-                offset += increment
-                body['variables']['cursor'] = str(offset)
+            connection_error = False
+            
+            try:
+                raw_json = json.loads(res.text)
+            except ValueError:
+                print("Json decode err")
+            else:
+                if 'data' in raw_json:
+                    offset += increment
+                    body['variables']['cursor'] = str(offset)
 
-                profiles = raw_json['data']['profiles']
+                    profiles = raw_json['data']['profiles']
 
-                if len(profiles) == 0:
-                    print("Zero profiles found, continuing")
+                    if len(profiles) == 0:
+                        print("Zero profiles found, continuing")
+                        print(raw_json)
+                        zero_results = True
+                        continue
+
+                    # Get details for each individual profile found
+                    print(f"Scraping batch of {len(profiles)} profiles")
+                    for profile in tqdm(profiles):
+                        if not is_uuid_already_scraped(profile['uuid']):
+                            body_profile_detail['variables']['uuid'] = profile['uuid'] # Specify uuid to get details of
+
+                            # Scrape profile details
+                            try:
+                                res = requests.post(api_url, data=json.dumps(body_profile_detail), headers=headers)
+                            except (requests.exceptions.ConnectionError):
+                                # If there is a connection error, wait 5 min and attempt scraping next person. If connection error again, exit program
+                                if connection_error:
+                                    print("Connection error happened twice, exiting program")
+                                    sys.exit()
+
+                                print("Connection error happened once, waiting 5 min and retrying...")
+                                connection_error = True
+                                sleep(300)
+                                continue
+                            else:
+                                connection_error = False
+
+                                try:
+                                    raw_json = json.loads(res.text)
+                                except (ValueError, requests.exceptions.SSLError):
+                                    print("Json decode err")
+                                else:
+                                    if 'data' in raw_json:
+                                        detailed_profile = raw_json['data']['profile']
+
+                                        if detailed_profile:
+                                            too_far_away = save_profile(detailed_profile)
+                                            count_in_location += 1
+                                        elif 'extensions' in raw_json and raw_json['extensions']['code'] == "RATE_LIMIT_EXCEEDED":
+                                            print("Rate limit exceeded, waiting...")
+                                            sleep(60)
+                                            print("Trying again...")
+
+                                            too_far_away = save_profile(detailed_profile)
+                                            count_in_location += 1
+                                        else:
+                                            print("Profile data empty")
+                                            print(raw_json)
+                                    else:
+                                        print("Invalid json error 1")
+                                        print(raw_json)
+                                    
+                                sleep(15)
+                        
+                else:
+                    print("Invalid json error 2")
                     print(raw_json)
-                    zero_results = True
+                    
+                    # If there is a connection error, wait 30 min and attempt scraping next person. If connection error again, exit program
+                    if connection_error:
+                        print("Invalid json error happened twice, exiting program")
+                        sys.exit()
+
+                    print("Invalid json error happened once, waiting 30 min and retrying...")
+                    connection_error = True
+                    sleep(1800)
                     continue
 
-                # Get details for each individual profile found
-                print(f"Scraping batch of {len(profiles)} profiles")
-                for profile in tqdm(profiles):
-                    if not is_uuid_already_scraped(profile['uuid']):
-                        body_profile_detail['variables']['uuid'] = profile['uuid'] # Specify uuid to get details of
-
-                        # Scrape profile details
-                        try:
-                            res = requests.post(api_url, data=json.dumps(body_profile_detail), headers=headers)
-                        except (requests.exceptions.ConnectionError):
-                            # If there is a connection error, wait 5 min and attempt scraping next person. If connection error again, exit program
-                            if connection_error:
-                                print("Connection error happened twice, exiting program")
-                                sys.exit()
-
-                            print("Connection error happened once, waiting 5 min and retrying...")
-                            connection_error = True
-                            sleep(300)
-                            continue
-                        else:
-                            connection_error = False
-
-                            try:
-                                raw_json = json.loads(res.text)
-                            except (ValueError, requests.exceptions.SSLError):
-                                print("Json decode err")
-                            else:
-                                if 'data' in raw_json:
-                                    detailed_profile = raw_json['data']['profile']
-
-                                    if detailed_profile:
-                                        too_far_away = save_profile(detailed_profile)
-                                        count_in_location += 1
-                                    elif 'extensions' in raw_json and raw_json['extensions']['code'] == "RATE_LIMIT_EXCEEDED":
-                                        print("Rate limit exceeded, waiting...")
-                                        sleep(60)
-                                        print("Trying again...")
-
-                                        too_far_away = save_profile(detailed_profile)
-                                        count_in_location += 1
-                                    else:
-                                        print("Profile data empty")
-                                        print(raw_json)
-                                else:
-                                    print("Invalid json error")
-                                
-                            sleep(5)
-                     
-            else:
-                print("Invalid json error")
-
-            sleep(10)
+                sleep(30)
 
     print(f"Done scraping {count_in_location} furs in location {location['city']}")
     count_in_location = 0
