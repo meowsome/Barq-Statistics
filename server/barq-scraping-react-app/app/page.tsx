@@ -1,13 +1,9 @@
 'use client'
 
-import React, { useState, useEffect } from "react";
 import dynamic from 'next/dynamic'
+import {GenderChart, OrientationChart, RelationshipChart} from "./charts/PieCharts";
 
 const Map = dynamic(() => import("./Map"), {ssr: false});
-// const GenderChart = dynamic(() => import("./charts/GenderChart"), {ssr: false});
-import GenderChart from "./charts/GenderChart";
-
-// TODO implement suspense
 
 export default function App() {
   return (
@@ -20,7 +16,11 @@ export default function App() {
           Hello world!
         </h1>
         
+        <div className="flex flex-wrap">
         <GenderChart />
+          <OrientationChart />
+          <RelationshipChart />
+        </div>
       </div>
     </div>
   )

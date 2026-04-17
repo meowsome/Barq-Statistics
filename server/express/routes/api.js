@@ -3,6 +3,33 @@ import db from "../db/connection.js";
 
 const router = express.Router();
 
+function arrayToLabelValues(results, labelTitle, valueTitle, type) {
+    let valueKey; 
+    let labelKey;
+    switch (type) {
+        case "pie":
+            valueKey = "values"
+            labelKey = "labels"
+            break;
+
+        case "bar":
+            valueKey = "x"
+            labelKey = "y"
+            break;
+    }
+
+    const counts = {
+        [valueKey]: [],
+        [labelKey]: []
+    };
+    results.forEach(gender => {
+        counts[labelKey].push(gender._id[labelTitle] ? gender._id[labelTitle] : "N/A");
+        counts[valueKey].push(gender[valueTitle]);
+    })
+
+    return counts;
+}
+
 router.get("/coordinates", async (req, res) => {
     const collection = await db.collection(process.env.MONGODB_COLLECTION);
 
@@ -48,13 +75,55 @@ router.get("/genders", async (req, res) => {
             }
         },
         { $sort: { count: -1 } },
-        { $limit: 5 }
+        { $limit: 6 }
     ]).toArray();
 
-    const counts = {
-        "labels": results.map(result => result._id.genders),
-        "counts": results.map(result => result.count)
-    }
+    const counts = arrayToLabelValues(results, 'genders', 'count', 'pie');
+
+    res.send(counts).status(200);
+});
+
+router.get("/orientation", async (req, res) => {
+    const collection = await db.collection(process.env.MONGODB_COLLECTION);
+
+    const results = await collection.aggregate([
+        {
+            $group: {
+                _id: {
+                    sexualOrientation: "$bio.sexualOrientation",
+                },
+                count: { $sum: 1 }
+            }
+        },
+        { $sort: { count: -1 } },
+        { $limit: 9 }
+    ]).toArray();
+
+    const counts = arrayToLabelValues(results, 'sexualOrientation', 'count', 'pie');
+    
+    res.send(counts).status(200);
+});
+
+router.get("/relationship", async (req, res) => {
+    const collection = await db.collection(process.env.MONGODB_COLLECTION);
+
+    const results = await collection.aggregate([
+        {
+            $group: {
+                _id: {
+                    relationshipStatus: "$bio.relationshipStatus",
+                },
+                count: { $sum: 1 }
+            }
+        },
+        { $sort: { count: -1 } },
+        { $limit: 7 }
+    ]).toArray();
+
+    const counts = arrayToLabelValues(results, 'relationshipStatus', 'count', 'pie');
+
+    res.send(counts).status(200);
+});
     
     res.send(counts).status(200);
 });
