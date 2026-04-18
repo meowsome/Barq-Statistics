@@ -154,4 +154,23 @@ router.get("/fursonas", async (req, res) => {
 });
 
 
+router.get("/age", async (req, res) => {
+    const collection = await db.collection(process.env.MONGODB_COLLECTION);
+
+    const results = await collection.find(
+        {},
+        {
+            projection: {
+                'age': 1,
+                '_id': 0
+            }
+        }
+    ).toArray();
+
+    const counts = results.map(result => result.age < 100 ? result.age : 100);
+    
+    res.send(counts).status(200);
+});
+
+
 export default router;
