@@ -59,6 +59,42 @@ $match: {
     res.send(counts).status(200);
 });
 
+router.get("/sonas-per-country", async (req, res) => {
+    const collection = await db.collection(process.env.MONGODB_COLLECTION);
+
+    // Get count of each occurance of coordinate from database
+    const results = await collection.aggregate([
+        { $unwind: "$sonas" },
+        {
+            $group: {
+                _id: {
+                    countryCode: "$location.place.country",
+                    sonas: "$sonas.species.displayName",
+                },
+                count: { $sum: 1 }
+            }
+        },
+        { 
+            $sort: { 
+                "count": -1
+            }
+        },
+        {
+            $group: {
+                _id: "$_id.countryCode",
+                popularFursona: {
+                    $first: "$_id.sonas"
+                },
+                count: {
+                    $first: "$count"
+                }
+            }
+        }
+    ]).toArray();
+
+    res.send(results).status(200);
+});
+
 router.get("/count", async (req, res) => {
     const collection = await db.collection(process.env.MONGODB_COLLECTION);
 

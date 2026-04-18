@@ -10,7 +10,7 @@ const Map = dynamic(() => import("./Map"), {ssr: false});
 export default function App() {
   return (
     <div className="flex">
-      <div className="w-2/3">
+      <div className="w-2/3 relative">
         <Map />
       </div>
       <div className="w-1/3 p-4 overflow-auto h-screen" >
