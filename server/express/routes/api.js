@@ -89,6 +89,13 @@ router.get("/sonas-per-country", async (req, res) => {
                     $first: "$count"
                 }
             }
+        },
+        {
+            $match: {
+                count: {
+                    $gt: 10
+                }
+            }
         }
     ]).toArray();
 
