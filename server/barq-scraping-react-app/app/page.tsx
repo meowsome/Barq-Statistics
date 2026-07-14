@@ -31,6 +31,29 @@ export default function App() {
           <FursonaChart />
           <HobbiesChart />
           <AgeChart />
+          
+          <div className="p-3">
+            <h3 className="text-2xl font-bold mb-2">About</h3>
+            <h5 className="text-xl font-bold">Process</h5>
+            <p className="text-body text-gray-600">Technologies used: Android Studio, HTTP Toolkit, Plotly, Pandas, Numpy, Leaflet, Express, React</p>
+            <ol className="list-decimal list-inside pl-6 mb-2 text-body text-gray-600">
+              <li>Android Studio was used used to run the Barq app on a desktop environment</li>
+              <li>HTTP Toolkit was used to sniff packets sent to the Barq API from the Barq app</li>
+              <li>The Barq API URLs were analyzed to determine their inputs and outputs</li>
+              <li>A set of popular locations in the U.S. and other regions around the world were created</li>
+              <li>For each location, Barq profiles were visited and had their data collected starting with the first one until no more could be loaded</li>
+              <li>A mini PC was set up with a fresh Barq account to send GET requests using the algorithm described above</li>
+              <li>All data was combined and cleaned</li>
+            </ol>
+            <h5 className="text-lg font-bold">Why?</h5>
+            <p className="text-body text-gray-600 mb-2">
+              Barq accounts contain information for real furries around the world. By performing statistics on a subset of this data, unique geographical and other patterns can be observed for real furries.
+            </p>
+            <h5 className="text-lg font-bold">Ethics</h5>
+            <p className="text-body text-gray-600 mb-2">
+              All data was collected legally and user profiles are stored anonymously by removing all identifying information after data was collected. Statistics are kept broad. No particular user was singled out in these statistics. All data collected is publicly accessible by anyone with the Barq app installed on their device, no private data was compromised. 
+            </p>
+          </div>
         </div>
       </div>
     </div>
