@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import {GenderChart, OrientationChart, RelationshipChart} from "./charts/PieCharts";
-import {AgeChart, FursonaChart} from "./charts/BarCharts";
+import {AgeChart, FursonaChart, HobbiesChart} from "./charts/BarCharts";
 import TotalCount from "./charts/Counts";
 
 const Map = dynamic(() => import("./Map"), {ssr: false});
@@ -27,6 +27,7 @@ export default function App() {
           <OrientationChart />
           <RelationshipChart />
           <FursonaChart />
+          <HobbiesChart />
           <AgeChart />
         </div>
       </div>
