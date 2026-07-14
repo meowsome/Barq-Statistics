@@ -32,6 +32,10 @@ export function FursonaChart() {
                     layout={{
                         yaxis: {
                             automargin: true,
+                            fixedrange: true
+                        },
+                        xaxis: {
+                            fixedrange: true
                         },
                         margin: {
                             b: 20,
@@ -40,9 +44,12 @@ export function FursonaChart() {
                         }
                     }}
                     style={{ width: "100%", height: "400px" }}
+                    config={{
+                        modeBarButtonsToRemove: ['lasso2d', 'select2d']
+                    }}
                 />
             ) : (
-                <Skeleton height={500} enableAnimation />
+                <Skeleton height={400} enableAnimation />
             )}
         </div>
     );
@@ -76,12 +83,14 @@ export function AgeChart() {
                         xaxis: {
                             title: {
                                 text: 'Age'
-                            }
+                            },
+                            fixedrange: true
                         },
                         yaxis: {
                             title: {
                                 text: 'Count'
-                            }
+                            },
+                            fixedrange: true
                         },
                         margin: {
                             b: 50,
@@ -92,6 +101,9 @@ export function AgeChart() {
                         }
                     }}
                     style={{ width: "100%", height: "325px" }}
+                    config={{
+                        modeBarButtonsToRemove: ['lasso2d', 'select2d']
+                    }}
                 />
             ) : (
                 <Skeleton height={325} enableAnimation />
@@ -128,6 +140,10 @@ export function HobbiesChart() {
                     layout={{
                         yaxis: {
                             automargin: true,
+                            fixedrange: true
+                        },
+                        xaxis: {
+                            fixedrange: true
                         },
                         margin: {
                             b: 20,
@@ -136,9 +152,12 @@ export function HobbiesChart() {
                         }
                     }}
                     style={{ width: "100%", height: "400px" }}
+                    config={{
+                        modeBarButtonsToRemove: ['lasso2d', 'select2d']
+                    }}
                 />
             ) : (
-                <Skeleton height={500} enableAnimation />
+                <Skeleton height={400} enableAnimation />
             )}
         </div>
     );
