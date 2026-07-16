@@ -98,7 +98,7 @@ export default function Map() {
 
     return (
         <div>
-            <div className="relative z-0" id="map" style={{ height: "100vh", width: "100%" }}></div>
+            <div className="relative z-0 sm:h-screen h-[50vh]" id="map" style={{ width: "100%" }}></div>
             
             <div className="absolute top-3 right-3 z-1 text-right">
                 <button data-dropdown-toggle="dropdown" className="inline-flex items-center justify-center text-black shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 cursor-pointer bg-white" type="button" onClick={() => setMenuOpen(!menuOpen)}>
