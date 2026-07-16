@@ -53,6 +53,10 @@ export default function App() {
             <p className="text-body text-gray-600 mb-2">
               All data was collected legally and user profiles are stored anonymously by removing all identifying information after data was collected. Statistics are kept broad. No particular user was singled out in these statistics. All data collected is publicly accessible by anyone with the Barq app installed on their device, no private data was compromised. 
             </p>
+            <h5 className="text-lg font-bold">Data</h5>
+            <p className="text-body text-gray-600 mb-2">
+              The data contains a subset of roughly 30% of all Barq users. This is because the data scraped only included users that were active within the past few months. Additionally, there are also areas of the world where scraping was not able to be performed due to limitations. Apologies if your area was not scraped. 
+            </p>
           </div>
         </div>
       </div>
