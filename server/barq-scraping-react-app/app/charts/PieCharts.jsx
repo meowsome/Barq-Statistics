@@ -23,7 +23,7 @@ export function GenderChart() {
     const [chartData, setChartData] = useState({});
 
     useEffect(() => {
-        fetch("/api/genders")
+        fetch("/api/genders", { cache: 'force-cache' })
         .then((res) => res.json())
         .then((data) => {
             setChartData(data);
@@ -60,7 +60,7 @@ export function OrientationChart() {
     const [chartData, setChartData] = useState({});
 
     useEffect(() => {
-        fetch("/api/orientation")
+        fetch("/api/orientation", { cache: 'force-cache' })
         .then((res) => res.json())
         .then((data) => {
             setChartData(data);
@@ -97,7 +97,7 @@ export function RelationshipChart() {
     const [chartData, setChartData] = useState({});
 
     useEffect(() => {
-        fetch("/api/relationship")
+        fetch("/api/relationship", { cache: 'force-cache' })
         .then((res) => res.json())
         .then((data) => {
             setChartData(data);

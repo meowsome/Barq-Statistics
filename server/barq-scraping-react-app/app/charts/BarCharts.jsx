@@ -9,7 +9,7 @@ export function FursonaChart() {
     const [chartData, setChartData] = useState([]);
 
     useEffect(() => {
-        fetch("/api/fursonas")
+        fetch("/api/fursonas", { cache: 'force-cache' })
         .then((res) => res.json())
         .then((data) => {
             setChartData(data);
@@ -60,7 +60,7 @@ export function AgeChart() {
     const [chartData, setChartData] = useState([]);
 
     useEffect(() => {
-        fetch("/api/age")
+        fetch("/api/age", { cache: 'force-cache' })
         .then((res) => res.json())
         .then((data) => {
             setChartData(data);
@@ -117,7 +117,7 @@ export function HobbiesChart() {
     const [chartData, setChartData] = useState([]);
 
     useEffect(() => {
-        fetch("/api/hobbies")
+        fetch("/api/hobbies", { cache: 'force-cache' })
         .then((res) => res.json())
         .then((data) => {
             setChartData(data);

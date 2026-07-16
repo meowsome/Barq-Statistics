@@ -6,7 +6,7 @@ export default function TotalCount() {
     const [totalCount, setTotalCount] = useState(0);
 
     useEffect(() => {
-        fetch("/api/count")
+        fetch("/api/count", { cache: 'force-cache' })
         .then((res) => res.json())
         .then((data) => {
             setTotalCount(data);

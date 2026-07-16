@@ -37,7 +37,7 @@ export default function Map() {
     function addHeatmapLayer(localMap) {
         removeActiveLayer();
 
-        fetch("/api/coordinates")
+        fetch("/api/coordinates", { cache: 'force-cache' })
         .then((res) => res.json())
         .then((data) => {
             setPoints(data)
@@ -49,7 +49,7 @@ export default function Map() {
     function addFursonaLayer() {
         removeActiveLayer();
 
-        fetch("/api/sonas-per-country")
+        fetch("/api/sonas-per-country", { cache: 'force-cache' })
         .then((res) => res.json())
         .then((data) => {
             const uniqueSonas = [...new Set(data.map(country => country.popularFursona))];

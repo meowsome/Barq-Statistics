@@ -13,3 +13,11 @@ How to set-up scraping
 
 ### Fun Fact:
 The Barq Terms states that you should not scrape in a way that negatively impacts site performance. This project has various delays implemented while the scraping is happening, and does not scrape fast enough to impact site performance.
+
+
+## How to Generate Static Site:
+1. cd server/express
+2. node index
+3. cd ../barq-scraping-react-app
+4. npm run build
+5. npx serve out
