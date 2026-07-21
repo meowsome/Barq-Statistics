@@ -2,6 +2,9 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import genders from "@/data/genders.json";
+import orientation from "@/data/orientation.json";
+import relationship from "@/data/relationship.json";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false, })
 
@@ -23,11 +26,7 @@ export function GenderChart() {
     const [chartData, setChartData] = useState({});
 
     useEffect(() => {
-        fetch("/api/genders", { cache: 'force-cache' })
-        .then((res) => res.json())
-        .then((data) => {
-            setChartData(data);
-        });
+        setChartData(genders);
     })
 
     return (
@@ -60,11 +59,7 @@ export function OrientationChart() {
     const [chartData, setChartData] = useState({});
 
     useEffect(() => {
-        fetch("/api/orientation", { cache: 'force-cache' })
-        .then((res) => res.json())
-        .then((data) => {
-            setChartData(data);
-        });
+        setChartData(orientation);
     })
 
     return (
@@ -97,11 +92,7 @@ export function RelationshipChart() {
     const [chartData, setChartData] = useState({});
 
     useEffect(() => {
-        fetch("/api/relationship", { cache: 'force-cache' })
-        .then((res) => res.json())
-        .then((data) => {
-            setChartData(data);
-        });
+        setChartData(relationship);
     })
 
     return (

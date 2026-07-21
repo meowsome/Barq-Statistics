@@ -2,6 +2,9 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import fursonas from "@/data/fursonas.json";
+import age from "@/data/age.json";
+import hobbies from "@/data/hobbies.json";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false, })
 
@@ -9,11 +12,7 @@ export function FursonaChart() {
     const [chartData, setChartData] = useState([]);
 
     useEffect(() => {
-        fetch("/api/fursonas", { cache: 'force-cache' })
-        .then((res) => res.json())
-        .then((data) => {
-            setChartData(data);
-        });
+        setChartData(fursonas);
     })
 
     return (
@@ -60,12 +59,8 @@ export function AgeChart() {
     const [chartData, setChartData] = useState([]);
 
     useEffect(() => {
-        fetch("/api/age", { cache: 'force-cache' })
-        .then((res) => res.json())
-        .then((data) => {
-            setChartData(data);
+        setChartData(age);
         });
-    })
 
     return (
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm w-full h-[400px]">
@@ -117,11 +112,7 @@ export function HobbiesChart() {
     const [chartData, setChartData] = useState([]);
 
     useEffect(() => {
-        fetch("/api/hobbies", { cache: 'force-cache' })
-        .then((res) => res.json())
-        .then((data) => {
-            setChartData(data);
-        });
+        setChartData(hobbies);
     })
 
     return (

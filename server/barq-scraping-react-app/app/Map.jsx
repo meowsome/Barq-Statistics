@@ -3,6 +3,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import 'leaflet.heat'
 import countries_geojson from './data/countries.json'
+import coordinates from "@/data/coordinates.json";
+import sonas_per_country from "@/data/sonas-per-country.json";
 
 const chartColors = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
 		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
@@ -37,22 +39,15 @@ export default function Map() {
     function addHeatmapLayer(localMap) {
         removeActiveLayer();
 
-        fetch("/api/coordinates", { cache: 'force-cache' })
-        .then((res) => res.json())
-        .then((data) => {
-            setPoints(data)
-            const heatLayer = L.heatLayer(data, {minOpacity: 0.3}).addTo(localMap ? localMap : map);
+        setPoints(coordinates);
+        const heatLayer = L.heatLayer(coordinates, {minOpacity: 0.3}).addTo(localMap ? localMap : map);
             setVisibleLayer(heatLayer);
-        });
     }
 
     function addFursonaLayer() {
         removeActiveLayer();
 
-        fetch("/api/sonas-per-country", { cache: 'force-cache' })
-        .then((res) => res.json())
-        .then((data) => {
-            const uniqueSonas = [...new Set(data.map(country => country.popularFursona))];
+        const uniqueSonas = [...new Set(sonas_per_country.map(country => country.popularFursona))];
             let sonasColors = {};
             for (let i = 0; i < uniqueSonas.length; i++) {
                 sonasColors[uniqueSonas[i]] = chartColors[i];
@@ -61,7 +56,7 @@ export default function Map() {
             const fursonaLayer = L.geoJson(countries_geojson, {
                 onEachFeature: function(feature, layer) {
                     var countryName = feature.properties.name;
-                    const countryDetails = data.find(country => country._id == countryName || country._id == "United States" && countryName == "United States of America"); 
+                const countryDetails = sonas_per_country.find(country => country._id == countryName || country._id == "United States" && countryName == "United States of America");
                     if (countryDetails != null) {
                         const popularFursona = countryDetails.popularFursona;
                         layer.setStyle({
@@ -74,7 +69,6 @@ export default function Map() {
             }).addTo(map);
             
             setVisibleLayer(fursonaLayer);
-        })
     }
 
     // Initialize map, only run once

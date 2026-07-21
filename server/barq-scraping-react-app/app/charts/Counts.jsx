@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import count from "@/data/count.json";
 
 export default function TotalCount() {
     const [totalCount, setTotalCount] = useState(0);
 
     useEffect(() => {
-        fetch("/api/count", { cache: 'force-cache' })
-        .then((res) => res.json())
-        .then((data) => {
-            setTotalCount(data);
-        });
+        setTotalCount(count);
     })
 
     return (

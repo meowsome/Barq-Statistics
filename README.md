@@ -19,5 +19,6 @@ The Barq Terms states that you should not scrape in a way that negatively impact
 1. cd server/express
 2. node index
 3. cd ../barq-scraping-react-app
-4. npm run build
-5. npx serve out
+4. node scripts/cache-api.js
+5. npm run build
+6. npx serve out
