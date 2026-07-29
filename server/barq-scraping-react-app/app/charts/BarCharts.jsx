@@ -37,14 +37,18 @@ export function FursonaChart() {
                             fixedrange: true
                         },
                         margin: {
-                            b: 20,
-                            t: 20,
-                            pad: 0
-                        }
+                            b: 15,
+                            t: 15,
+                            l: 15,
+                            r: 15,
+                            pad: 2
+                        },
+                        autosize: true
                     }}
                     style={{ width: "100%", height: "400px" }}
                     config={{
-                        modeBarButtonsToRemove: ['lasso2d', 'select2d']
+                        modeBarButtonsToRemove: ['lasso2d', 'select2d'],
+                        responsive: true
                     }}
                 />
             ) : (
@@ -60,7 +64,7 @@ export function AgeChart() {
 
     useEffect(() => {
         setChartData(age);
-        });
+    });
 
     return (
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm w-full h-[400px]">
@@ -137,9 +141,11 @@ export function HobbiesChart() {
                             fixedrange: true
                         },
                         margin: {
-                            b: 20,
-                            t: 20,
-                            pad: 0
+                            b: 15,
+                            t: 15,
+                            l: 15,
+                            r: 15,
+                            pad: 2
                         }
                     }}
                     style={{ width: "100%", height: "400px" }}
