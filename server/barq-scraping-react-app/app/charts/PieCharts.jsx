@@ -10,13 +10,19 @@ const Plot = dynamic(() => import("react-plotly.js"), { ssr: false, })
 
 const chartLayout = {
     autosize: true,
-    margin: { l: 55, r: 0, b: 0, t: 0, pad: 0},
+    margin: {
+        t: 20,
+        l: 20,
+        r: 20,
+        b: 50,
+    },
     showlegend: true,
     legend: {
-        yanchor: "center",
-        y: 0.5,
-        xanchor: "right",
-        x: 2
+        orientation: "h",
+        x: 0.5,
+        xanchor: "center",
+        y: 1.1,
+        yanchor: "bottom",
     }
 }
 
@@ -33,14 +39,13 @@ export function GenderChart() {
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm w-full">
             <p className="text-sm font-medium text-gray-500 uppercase tracking-wide">Gender</p>
             {"values" in chartData ? (
-                <div style={{ width: '100%', height: '200px' }}>
+                <div style={{ width: '100%', height: '350px' }}>
                     <Plot
                         data={[
                             {
                                 values: chartData.values,
                                 labels: chartData.labels,
                                 type: 'pie',
-                                textinfo: "percent"
                             }
                         ]}
                         layout={chartLayout}
@@ -66,14 +71,13 @@ export function OrientationChart() {
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm w-full">
             <p className="text-sm font-medium text-gray-500 uppercase tracking-wide">Orientation</p>
             {"values" in chartData ? (
-                <div style={{ width: '100%', height: '200px' }}>
+                <div style={{ width: '100%', height: '350px' }}>
                     <Plot
                         data={[
                             {
                                 values: chartData.values,
                                 labels: chartData.labels,
                                 type: 'pie',
-                                textinfo: "percent"
                             }
                         ]}
                         layout={chartLayout}
@@ -99,14 +103,13 @@ export function RelationshipChart() {
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm w-full">
             <p className="text-sm font-medium text-gray-500 uppercase tracking-wide">Relationships</p>
             {"values" in chartData ? (
-                <div style={{ width: '100%', height: '275px' }}>
+                <div style={{ width: '100%', height: '350px' }}>
                     <Plot
                         data={[
                             {
                                 values: chartData.values,
                                 labels: chartData.labels,
                                 type: 'pie',
-                                textinfo: "percent"
                             }
                         ]}
                         layout={chartLayout}
