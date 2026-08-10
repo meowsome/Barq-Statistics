@@ -8,6 +8,9 @@ import hobbies from "@/data/hobbies.json";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false, })
 
+const colors = ["#6ac6cb", "#f5ce77", "#f69b77", "#dbb0f0", "#89c564", "#9fbaf1", "#fc87b1" ,"#c9db79", "#a3dabc", "#b397e5", "#b3b3b3"];
+const colorlist = [...colors, ...colors];
+
 export function FursonaChart() {
     const [chartData, setChartData] = useState([]);
 
@@ -25,7 +28,12 @@ export function FursonaChart() {
                             x: chartData.x,
                             y: chartData.y,
                             type: 'bar',
-                            orientation: 'h'
+                            orientation: 'h',
+                            marker: {
+                                color: colorlist
+                            },
+                            text: chartData.x.map(String),
+
                         }
                     ]}
                     layout={{
@@ -129,7 +137,11 @@ export function HobbiesChart() {
                             x: chartData.x,
                             y: chartData.y,
                             type: 'bar',
-                            orientation: 'h'
+                            orientation: 'h',
+                            marker: {
+                                color: colorlist
+                            },
+                            text: chartData.x.map(String)
                         }
                     ]}
                     layout={{

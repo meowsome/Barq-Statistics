@@ -6,6 +6,8 @@ import genders from "@/data/genders.json";
 import orientation from "@/data/orientation.json";
 import relationship from "@/data/relationship.json";
 
+const colorlist = ["#6ac6cb", "#f5ce77", "#f69b77", "#dbb0f0", "#89c564", "#9fbaf1", "#fc87b1" ,"#c9db79", "#a3dabc", "#b397e5", "#b3b3b3"];
+
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false, })
 
 const chartLayout = {
@@ -23,7 +25,8 @@ const chartLayout = {
         xanchor: "center",
         y: 1.1,
         yanchor: "bottom",
-    }
+    },
+    colorway: colorlist
 }
 
 const chartStyle = { width: "100%", height: "100%" }
