@@ -19,7 +19,7 @@ export default function App() {
         </h1>
         
           <p className="text-body text-gray-600 mb-2">
-            Barq is an app for furries to connect with one another based on location. For this project, profile information was collected for a subset of all Barq users. This information was used to perform analytics and statistics. No individual user was singled out in this project.
+            Barq is an app for furries to connect with one another based on location. For this project, profile information was collected for a subset of all Barq users. This information was used to perform statistics. Please scroll to the bottom for more information.
           </p>
         
         <div className="flex flex-wrap flex-col space-y-2">
@@ -47,15 +47,15 @@ export default function App() {
             </ol>
             <h5 className="text-lg font-bold">Why?</h5>
             <p className="text-body text-gray-600 mb-2">
-              Barq accounts contain information for real furries around the world. By performing statistics on a subset of this data, unique geographical and other patterns can be observed for real furries.
+              Barq accounts contain information for real furries around the world. Since Barq uses users locations on their mobile devices, generally the data can be considered as accurate. By performing generalized statistics on a subset of this data, unique geographical and other patterns can be observed for real furries.
             </p>
             <h5 className="text-lg font-bold">Ethics</h5>
             <p className="text-body text-gray-600 mb-2">
-              All data was collected legally and user profiles are stored anonymously by removing all identifying information after data was collected. Statistics are kept broad. No particular user was singled out in these statistics. All data collected is publicly accessible by anyone with the Barq app installed on their device, no private data was compromised. 
+              All data was collected legally and user profiles are stored anonymously by removing all identifying information after data was collected. No particular user was singled out in these statistics. All data collected is publicly accessible by anyone with the Barq app installed on their device. No private data was compromised. Data was not shared with any other party. No users were solicited in this process. Scraping was performed slowly as to not negatively impact site performance.
             </p>
             <h5 className="text-lg font-bold">Data</h5>
             <p className="text-body text-gray-600 mb-2">
-              The data contains a subset of roughly 30% of all Barq users. This is because the data scraped only included users that were active within the past few months. Additionally, there are also areas of the world where scraping was not able to be performed due to limitations. Apologies if your area was not scraped. 
+              The data contains a subset of roughly 30% of all Barq users. This is because the data scraped only included users that were active within the past 3 months. There are also areas of the world where scraping was not able to be performed due to limitations. Apologies if your area was not scraped. 
             </p>
           </div>
         </div>
