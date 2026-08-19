@@ -4,8 +4,12 @@ import dynamic from 'next/dynamic'
 import {GenderChart, OrientationChart, RelationshipChart} from "./charts/PieCharts";
 import {AgeChart, FursonaChart, HobbiesChart} from "./charts/BarCharts";
 import TotalCount from "./charts/Counts";
+import Skeleton from 'react-loading-skeleton'
 
-const Map = dynamic(() => import("./Map"), {ssr: false});
+const Map = dynamic(() => import("./Map"), {
+  ssr: false,
+  loading: () => <Skeleton className="md:h-screen h-[50vh]" enableAnimation />
+});
 
 export default function App() {
   return (

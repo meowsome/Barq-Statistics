@@ -57,7 +57,7 @@ export function GenderChart() {
                     />
                 </div>
             ) : (
-                <Skeleton height={200} enableAnimation />
+                <Skeleton height={350} enableAnimation />
             )}
         </div>
     );
@@ -89,7 +89,7 @@ export function OrientationChart() {
                     />
                 </div>
             ) : (
-                <Skeleton height={200} enableAnimation />
+                <Skeleton height={350} enableAnimation />
             )}
         </div>
     );
@@ -121,7 +121,7 @@ export function RelationshipChart() {
                     />
                 </div>
             ) : (
-                <Skeleton height={275} enableAnimation />
+                <Skeleton height={350} enableAnimation />
             )}
         </div>
     );
