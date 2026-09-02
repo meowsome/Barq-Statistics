@@ -49,6 +49,9 @@ export default function App() {
               <li>A mini PC was set up with a fresh Barq account to send GET requests using the algorithm described above</li>
               <li>All data was combined and cleaned</li>
             </ol>
+            <div className="py-3">
+              <a href="https://github.com/meowsome/Barq-Statistics" target="_blank" className="px-4 py-2 font-bold bg-blue-500 text-white hover:bg-blue-700">View Source</a>
+            </div>
             <h5 className="text-lg font-bold">Why?</h5>
             <p className="text-body text-gray-600 mb-2">
               Barq accounts contain information for real furries around the world. Since Barq uses users locations on their mobile devices, generally the data can be considered as accurate. By performing generalized statistics on a subset of this data, unique geographical and other patterns can be observed for real furries.
